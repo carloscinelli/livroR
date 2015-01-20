@@ -1,0 +1,322 @@
+---
+title: "R e Rstudio"
+author: "Carlos Cinelli"
+date: "14 de janeiro de 2015"
+output: html_document
+---
+
+# R e Rstudio
+
+## Instalação
+
+Instalar o R e o RStudio é bastante fácil, pois ambos já vêm com distribuições compiladas para Windows, Mac e Linux. Se você ainda não os tem instalados em seu computador, este será seu primeiro exercício.
+
+O R é gratuito e está disponível no site do [CRAN (The Comprehensive R Archive Network)](cran.r-project.org). O RStudio também tem uma versão *desktop* gratuita disponível no site do [RStudio](http://www.rstudio.com/products/rstudio/#Desk). Em ambos os casos, baixe a versão compatível com seu sistema operacional e siga as instruções de instalação.
+
+Com esses dois softwares podemos continuar boa parte do nosso livro. Entretanto, para ter um ambiente completo de desenvolvimento no R, você também precisará instalar uma distribuição de Latex, como o [MikTex](http://miktex.org) para Windows ou [MacTex](https://tug.org/mactex/) para Mac; e, caso você esteja utilizando o Windows, a versão mais recente do [RTools](http://cran.r-project.org/bin/windows/Rtools/) (para criarmos pacotes e integrar o R com C++). Precisaremos 
+
+
+## R Gui
+
+Ao instalar o R, automaticamente também é instalada uma interface gráfica chamada *R Gui* (Gui = Graphical User Interface). Abra o R no seu computador. A primeira tela que você verá é a do console. Abra também uma tela de editor de texto em "file" -> "new script".
+
+![RGUI](https://dl.dropboxusercontent.com/u/44201187/wp/Rgui.png)
+
+Escreva os seguintes comandos no editor de texto e aperte "ctrl+R".  
+```{r, eval=FALSE}
+1+1
+```
+O comando será enviado para o console. Agora faça o seguinte gráfico:
+```{r, eval=FALSE}
+plot(1:10)
+```
+Uma nova tela será aberta com o gráfico. Saia do R Gui escrevendo q() no console ou apertando "alt+f4". Ele irá perguntar se você deseja salvar o trabalho e o script. Clique em "não" para os dois casos. Estamos saindo do R Gui pois iremos trabalhar no RStudio.
+
+
+## RStudio
+
+Apesar de o R vir com uma interface gráfica bem interessante, existe um IDE (Integrated Development Environment - ou, em português, Ambiente de Desenvolvimento Integrado) chamado RStudio, com várias funcionalidades e gratuito. Neste livro utilizaremos o R sempre em conjunto com o RStudio.
+
+O RStudio tem algumas vantagens em relação ao R Gui:
+
+- Highlight do código;
+- Autocomplete;
+- Match automático de parenteses e chaves;
+- Interface intuitiva para objetos, gráficos, script;
+- Projetos;
+- Interação com HTML, entre outras.
+
+## RStudio
+Abra o RStudio em seu computador e inicie um novo Script em "File" -> "New File" -> "New RScript". Você também pode fazer isso com **"CTRL + SHIFT + N"** ou acessando o botão abaixo.
+
+![rscript](https://dl.dropboxusercontent.com/u/44201187/wp/rscript.png)
+
+## RStudio
+![RStudio1](https://dl.dropboxusercontent.com/u/44201187/wp/rstudio1.png)
+
+## RStudio 
+\footnotesize
+
+- **Script**: A tela superior esquerda do RStudio é o editor de texto onde você vai escrever seus Scripts. Ele possui code highlighting entre outras funcionalidades.
+
+- **Console**: No canto inferior esquerdo fica o console. O console nada mais é do que uma seção aberta de R, em que os comando são executados.
+
+- **Área de trabalho e histórico**: Ficam no canto superior direito. Os objetos criados na seção e o histórico dos comandos podem ser acessados ali.
+
+- **Arquivos, Gráficos, Pacotes, Ajuda**: Ficam no canto inferior direito. Você pode explorar pastas e arquivos diretamente do RStudio na aba "Files"; os gráficos que forem feitos apareceram na aba "Plots". Os pacotes instalados em sua máquina estão listados em "Packages". As ajudas das funções aparecem em "Help". E o "Viewer" serve para visualização de https://dl.dropboxusercontent.com/u/44201187/wp/páginas em HTML e JavaScript.
+
+## Comandos pelo Script
+Acostume-se a escrever o código no Script ao invés de ficar escrevendo diretamente no console.
+
+Escreva o código abaixo no Script:
+```{r, eval=FALSE}
+1+1
+```
+E aperte "ctrl" + "enter". Isso envia o comando para o console e o resultado é exibido logo abaixo.
+
+```{r}
+1+1
+```
+
+## Comandos pelo Script
+Agora escreva o seguinte código no Script.
+```{r, eval=FALSE}
+# Gráfico dos números de 1 a 10
+plot(1:10)
+```
+O primeiro comando *"# Gráfico dos números de 1 a 10"* é, na verdade, um comentário. Comentários em Scripts do R são seguidos do símbolo #, e tudo que estiver após # não será executado. É uma boa prática comentar seu código, para que ele seja de fácil manutenção, tanto para você mesmo quanto para outros colegas. O segundo comando é de um gráfico. Aperte "ctrl" + "enter" nas duas linhas. O gráfico aparecerá no canto inferior direito do RStudio.
+
+## Comandos pelo Script
+![RStudio2](https://dl.dropboxusercontent.com/u/44201187/wp/rstudio2.png)
+
+## Comandos pelo Script
+Agora digite o seguinte comando no editor e aperte "ctrl" + "enter":
+```{r}
+x <- 15
+```
+Atribuímos o valor 15 à variável x. Note que isso aparece no canto superior direito do RStudio.
+
+![RStudio3](https://dl.dropboxusercontent.com/u/44201187/wp/rstudio3.png)
+
+## Comandos pelo Script
+O RStudio tem autocomplete. Escreve apenas `plo` e aperte **Tab**.
+
+![autocomplete](https://dl.dropboxusercontent.com/u/44201187/wp/autocomplete.png)
+
+## Comandos pelo Script
+Isso também funciona dentro da função, para vermos os parâmetros disponíveis. Escreva `plot()` e aperte **Tab**.
+
+![autocomplete2](https://dl.dropboxusercontent.com/u/44201187/wp/autocomplete2.png)
+
+## Comandos pelo Script
+Outras teclas de atalho:
+\pause 
+
+- **CTRL + 1**: Passa o cursor para o Script;
+- **CTRL + 2**: Passa o cursor para o console;
+- **SETA PARA CIMA (no console)**: acessa o histórico de comandos anteriores.
+
+\pause 
+Abra um novo Script:
+
+- **CTRL + ALT + SETA PARA ESQUERDA OU DIREITA**: Navega entre as abas de script abertas.
+
+
+## Comandos pelo Script
+Outras teclas de atalho:
+\pause
+
+- **CTRL + SHIFT + P**: "Previous command", roda o último comando executado;
+- **CTRL + SHIFT + ENTER**: "Source". Executa o Script inteiro;
+- **CTRL + S**: Salva o Script;
+
+\pause
+
+![RStudio4](https://dl.dropboxusercontent.com/u/44201187/wp/rstudio4.png)
+
+## Comandos pelo Script
+- **CTRL + L**: Limpa o console;
+- **CTRL + F**: Busca (e substituição). Aceita REGEX;
+- **CTRL + SHIFT + K**: Compila "Notebook" em PDF, HTML ou Word;
+- **ALT + SHIFT + K**: Veja os outros atalhos.
+
+\pause
+
+![RStudio5](https://dl.dropboxusercontent.com/u/44201187/wp/rstudio5.png)
+
+## Ajuda - Função Específica
+\footnotesize
+```{r, eval=FALSE}
+?mean; help(mean)
+```
+\normalsize
+![HELP](https://dl.dropboxusercontent.com/u/44201187/wp/help.png)
+
+## Ajuda - Função Específica
+![HELP2](https://dl.dropboxusercontent.com/u/44201187/wp/help2.png)
+
+## Ajuda - Busca por String
+\footnotesize
+```{r, eval=FALSE}
+??"normal distribution"; help.search("normal distribution")
+```
+\normalsize
+![HELP3](https://dl.dropboxusercontent.com/u/44201187/wp/help3.png)
+
+## Ajuda - Internet
+- StackOverflow (em Inglês e Português)
+![SO](https://dl.dropboxusercontent.com/u/44201187/wp/SO.png)
+
+## Ajuda - Internet
+- **Grupos de e-mail**: www.r-project.org/mail.html
+    - **R Help**: lista de e-mails principal, para dúvidas gerais.
+    - **R Announce**: Lista de anúncios sobre desenvolvimento do R.
+    - **R Packages**: Lista de anúncios sobre pacotes do R.
+    - **R Devel**: Lista de discussão de desenvolvedores no R.
+
+- **Blogs**
+    - **R Bloggers**: consolidador de blogs sobre R.
+
+## Pacotes
+Configurar o R para encontrar os pacotes já instalados nos computadores do curso.
+```{r, eval=FALSE}
+# Onde o R está buscando os pacotes?
+.libPaths() 
+
+# Vamos dizer ao R para buscar
+# Também em "D:/Curso de R/Pacotes"
+.libPaths(c("D:/Curso de R/Pacotes", .libPaths()))
+```
+
+
+## Pacotes
+\footnotesize
+A principal forma de distribuição de códigos no R é por meio de pacotes. Um pacote pode ser entendido como um conjunto de códigos auto-contido que adiciona funcionalidades ao R.
+
+Para carregar um pacote, use a função \texttt{library()}. 
+
+Ao carregar um pacote, você está adicionando suas funções ao `search` da seção, permitindo que você chame estas funções diretamente. Por exemplo, a função `mvrnorm`, que gera números aleatórios de uma normal multivariada, está no pacote `MASS`.
+```{r, error=TRUE}
+Sigma <- matrix(c(10,3,3,2),nrow=2,ncol=2) # Matriz de Var-Covar
+mu <- c(1, 10) # Médias 
+x <- mvrnorm(n=100, mu, Sigma) # Tenta gerar 100 obs, mas dá erro
+
+library(MASS) # Carrega pacote
+x <- mvrnorm(n=100, mu, Sigma) # Agora funciona
+```
+
+## Pacotes
+\footnotesize
+Para ver o que está no `search` do R, utilize a função `search()`. Note que o pacote MASS agora esta lá.
+
+```{r}
+search()
+```
+
+Para descarregar um pacote, utilize a função `detach()`.
+
+```{r}
+detach(package:MASS)
+```
+
+Às vezes pacotes tem o mesmo nome de funções. Neste caso, se ambos forem carregados, a função que prevalece é a do pacote que foi carregado por último. Uma outra forma de resolver isso é usar o nome do pacote e o operador `::` antes de chamar a função. Neste caso não há ambiguidade. 
+
+```{r}
+x <- MASS::mvrnorm(n=100, mu, Sigma)
+```
+
+## Pacotes
+Você também pode carregar ou descarregar pacotes pelo menu do canto inferior direito do RStudio, clicando na caixa ao lado do nome do pacote.
+
+![pacotes](https://dl.dropboxusercontent.com/u/44201187/wp/pacotes.png)
+
+
+## Pacotes
+Para instalar um pacote, use a função \texttt{install.packages()}.
+Por exemplo, o pacote \texttt{dplyr} é muito utilizado para manipulação de dados. Para instalá-lo e desinstalá-lo, temos os seguintes comandos.
+
+\footnotesize 
+```{r, eval=FALSE}
+############## Não rode ##################
+utils::install.packages("dplyr", 
+                        repos="http://cran.r-project.org/")
+
+remove.packages(dplyr) 
+############## Não rode ##################
+```
+A opção `repos="http://cran.r-project.org/"` diz ao R que é para baixar o pacote deste repositório. O `utils::` antes de `install.packages` diz que queremos acessar a função `install.packages` contida no pacote `utils`. 
+
+\normalsize
+
+
+## Pacotes, CRAN e Sites
+Grande parte dos pacotes do R estão centralizados em um repositório chamado CRAN (The Comprehensive R Archive Network), com diversos espelhos ao redor do mundo.
+
+Agora, vamos explorar um pouco o site oficial do R, **www.r-project.org**, e do CRAN, **cran.r-project.org**.
+
+\pause 
+
+- Manuais, livros, documentação;
+- Listas de e-mais;
+- The R Journal;
+- Lista de pacotes;
+- Task Views.
+
+# Um breve exemplo
+
+## Imóveis do Plano Piloto
+Para ilustrar uma análise no R, veremos um exemplo simples com ofertas online de apartamentos à venda no Plano Piloto,do site *Wimoveis*. Os dados foram obtidos por meio de webscraping utilizando o R e já passaram por um processo de "limpeza" prévio.
+
+Não se preocupe em entender os comandos agora, iremos trabalhar isso no decorrer do curso.
+
+## Imóveis do Plano Piloto
+
+```{r, warning=FALSE, message=FALSE}
+# Carregando os pacotes que vamos usar
+library(dplyr)
+library(ggplot2)
+library(xtable)
+
+
+# Carregando os dados
+dados <- readRDS("Dados/wi.venda.rds")
+
+# Vendo a estrutura dos dados
+str(dados, vec.len=1)
+```
+
+## Imóveis do Plano Piloto
+\footnotesize
+```{r}
+# Calculando medianas por bairro
+mediana_bairro <- dados %>% 
+  group_by(bairro) %>% summarise(Median_Preco = median(preco),
+                                 Median_Quarto = median(quartos),
+                                 Median_pm2 = median(pm2),
+                                 N=n())
+mediana_bairro
+```
+
+## Imóveis do Plano Piloto
+\tiny
+```{r}
+# Rodando um modelo linear
+modelo <- lm(preco~m2*bairro + quartos , data=dados)
+summary(modelo)
+```
+
+## Imóveis do Plano Piloto
+\footnotesize
+```{r,fig.width=8, fig.height=3.5}
+# Box-Plot dos precos por bairro
+ggplot(dados, aes(bairro, preco, color=bairro)) + geom_boxplot()
+```
+
+## Imóveis do Plano Piloto
+\footnotesize
+```{r,fig.width=8, fig.height=3.5}
+# Gráfico de dispersão com regressão
+ggplot(dados, aes(m2, preco, color=factor(quartos), group=1)) + 
+  geom_point(shape=1) + geom_smooth(method="lm") + 
+  facet_wrap(~bairro)
+```
