@@ -5,318 +5,257 @@ date: "14 de janeiro de 2015"
 output: html_document
 ---
 
+**Rascunho. Trabalho em andamento. Volte para ver atualizações**
+
 # R e Rstudio
 
 ## Instalação
 
-Instalar o R e o RStudio é bastante fácil, pois ambos já vêm com distribuições compiladas para Windows, Mac e Linux. Se você ainda não os tem instalados em seu computador, este será seu primeiro exercício.
+Instalar o R e o RStudio é bastante fácil, pois ambos já vêm com distribuições compiladas para Windows, Mac OS ou Linux.  O R é gratuito e está disponível no site do [CRAN (The Comprehensive R Archive Network)](cran.r-project.org). O RStudio tem uma versão *desktop* gratuita disponível [em seu site](http://www.rstudio.com/products/rstudio/#Desk). Esses são os dois principais softwares para acompanhar este livro. 
 
-O R é gratuito e está disponível no site do [CRAN (The Comprehensive R Archive Network)](cran.r-project.org). O RStudio também tem uma versão *desktop* gratuita disponível no site do [RStudio](http://www.rstudio.com/products/rstudio/#Desk). Em ambos os casos, baixe a versão compatível com seu sistema operacional e siga as instruções de instalação.
+Além disso, para ter um ambiente completo de desenvolvimento no R, você também precisará de uma distribuição de Latex (como o [MikTex](http://miktex.org) para Windows ou [MacTex](https://tug.org/mactex/) para Mac); e, caso você esteja utilizando o Windows, a versão mais recente do [RTools](http://cran.r-project.org/bin/windows/Rtools/) (para criar pacotes e integrar o R com C++). 
 
-Com esses dois softwares podemos continuar boa parte do nosso livro. Entretanto, para ter um ambiente completo de desenvolvimento no R, você também precisará instalar uma distribuição de Latex, como o [MikTex](http://miktex.org) para Windows ou [MacTex](https://tug.org/mactex/) para Mac; e, caso você esteja utilizando o Windows, a versão mais recente do [RTools](http://cran.r-project.org/bin/windows/Rtools/) (para criarmos pacotes e integrar o R com C++). Precisaremos 
+*Se você ainda não tem esses softwares em seu computador, baixe agora as versões compatíveis com seu sistema operacional e siga as instruções de instalação*.
 
+Este não é um livro para ser apenas lido e sim para ser **acompanhado digitando os códigos de exemplo** - ou, **em último caso**, copiando e colando. Os capítulos apresentam códigos em R com o resultado esperado, conforme a figura abaixo. 
+
+![estrutura](https://dl.dropboxusercontent.com/u/44201187/wp/estrutura_aula.png)
+
+Ao final da maior parte dos capítulos, faremos muitos exercícios para a consolidação do conteúdo. Todos os exercícios terão  uma resposta sugerida. Todavia, recomendo que você tente resolver sozinho antes de olhar a resposta.
 
 ## R Gui
 
-Ao instalar o R, automaticamente também é instalada uma interface gráfica chamada *R Gui* (Gui = Graphical User Interface). Abra o R no seu computador. A primeira tela que você verá é a do console. Abra também uma tela de editor de texto em "file" -> "new script".
+A instalação padrão do R vem com uma interface gráfica para o usuário (Graphical User Interface - GUI). No Windows, você encontrará o R no menu iniciar e no Mac você verá o ícone do R entre seus aplicativos. Nós não vamos utilizar o R Gui durante o livro. Entretanto, faremos um brevíssimo *tour* antes de passarmos para o RStudio.
+
+Abra a interface gráfica do R em seu computador.A primeira tela que você verá é a do console. Agora, abra, também, uma tela de editor de texto em "file" -> "new script". 
 
 ![RGUI](https://dl.dropboxusercontent.com/u/44201187/wp/Rgui.png)
 
-Escreva os seguintes comandos no editor de texto e aperte "ctrl+R".  
+Escreva os seguintes comandos no editor de texto e aperte **CTRL+R** (ou **CMD+ENTER** no Mac).  
+
 ```{r, eval=FALSE}
 1+1
 ```
-O comando será enviado para o console. Agora faça o seguinte gráfico:
+
+O comando será enviado para o console e você verá o resultado. Você poderia ter digitado o comando diretamente no console, mas isso não é uma boa prática. Acostume-se a sempre escrever em seu *script* (*script* é como chamamos o documento com os códigos de R que você produz).
+
+```{r, echo = FALSE}
+1+1
+```
+
+Escreva os seguinte comandos no editor de texto e repita o procedimento (**CTRL+R**):
+
 ```{r, eval=FALSE}
 plot(1:10)
 ```
-Uma nova tela será aberta com o gráfico. Saia do R Gui escrevendo q() no console ou apertando "alt+f4". Ele irá perguntar se você deseja salvar o trabalho e o script. Clique em "não" para os dois casos. Estamos saindo do R Gui pois iremos trabalhar no RStudio.
 
+Uma nova tela será aberta com o gráfico. 
+
+```{r, echo = FALSE}
+plot(1:10)
+```
+
+Por enquanto é só isso. Saia do R Gui escrevendo `q()` no console ou apertando **ALT+F4**. O R irá perguntar se você deseja salvar a sua área de trabalho e o script. Clique em **não** para os dois casos. 
+
+Estamos saindo do R Gui pois agora iremos trabalhar no RStudio.
 
 ## RStudio
 
-Apesar de o R vir com uma interface gráfica bem interessante, existe um IDE (Integrated Development Environment - ou, em português, Ambiente de Desenvolvimento Integrado) chamado RStudio, com várias funcionalidades e gratuito. Neste livro utilizaremos o R sempre em conjunto com o RStudio.
+Apesar de o R vir com uma interface gráfica interessante, existe um [Ambiente de Desenvolvimento Integrado](http://pt.wikipedia.org/wiki/Ambiente_de_desenvolvimento_integrado) ([Integrated Development Environment- IDE](http://en.wikipedia.org/wiki/Integrated_development_environment)) chamado RStudio, com várias funcionalidades e gratuito. 
 
-O RStudio tem algumas vantagens em relação ao R Gui:
+O RStudio possui algumas vantagens em relação ao R Gui:
 
 - Highlight do código;
 - Autocomplete;
 - Match automático de parenteses e chaves;
-- Interface intuitiva para objetos, gráficos, script;
-- Projetos;
+- Interface intuitiva para objetos, gráficos e script;
+- Criação de "projetos" com interface para controle de versão;
+- Facilidade na criação de pacotes;
 - Interação com HTML, entre outras.
 
-## RStudio
-Abra o RStudio em seu computador e inicie um novo Script em "File" -> "New File" -> "New RScript". Você também pode fazer isso com **"CTRL + SHIFT + N"** ou acessando o botão abaixo.
+Abra o RStudio em seu computador e inicie um novo Script em "File" -> "New File" -> "New RScript". Você também pode fazer isso com **CTRL + SHIFT + N** ou acessando o botão abaixo.
 
 ![rscript](https://dl.dropboxusercontent.com/u/44201187/wp/rscript.png)
 
-## RStudio
-![RStudio1](https://dl.dropboxusercontent.com/u/44201187/wp/rstudio1.png)
-
-## RStudio 
-\footnotesize
+Podemos dividir a tela do RStudio em quatro grande áreas:
 
 - **Script**: A tela superior esquerda do RStudio é o editor de texto onde você vai escrever seus Scripts. Ele possui code highlighting entre outras funcionalidades.
 
 - **Console**: No canto inferior esquerdo fica o console. O console nada mais é do que uma seção aberta de R, em que os comando são executados.
 
-- **Área de trabalho e histórico**: Ficam no canto superior direito. Os objetos criados na seção e o histórico dos comandos podem ser acessados ali.
+- **Área de trabalho e histórico**: Ficam no canto superior direito. Os objetos criados e o histórico dos comandos podem ser acessados ali.
 
-- **Arquivos, Gráficos, Pacotes, Ajuda**: Ficam no canto inferior direito. Você pode explorar pastas e arquivos diretamente do RStudio na aba "Files"; os gráficos que forem feitos apareceram na aba "Plots". Os pacotes instalados em sua máquina estão listados em "Packages". As ajudas das funções aparecem em "Help". E o "Viewer" serve para visualização de https://dl.dropboxusercontent.com/u/44201187/wp/páginas em HTML e JavaScript.
+- **Arquivos, Gráficos, Pacotes, Ajuda**: Ficam no canto inferior direito. Você pode explorar pastas e arquivos diretamente do RStudio na aba "Files"; os gráficos que forem feitos apareceram na aba "Plots". Os pacotes instalados em sua máquina estão listados em "Packages". As ajudas das funções aparecem em "Help". E o "Viewer" serve para visualização de páginas em HTML e JavaScript.
 
-## Comandos pelo Script
-Acostume-se a escrever o código no Script ao invés de ficar escrevendo diretamente no console.
+![RStudio1](https://dl.dropboxusercontent.com/u/44201187/wp/rstudio1.png)
 
-Escreva o código abaixo no Script:
+
+### Comandos pelo Script
+Como já dito, acostume-se a escrever o código no Script ao invés de ficar escrevendo diretamente no console. Para começarmos a nos familizarizar com o RStudio, escreva o código abaixo no Script:
 ```{r, eval=FALSE}
 1+1
 ```
-E aperte "ctrl" + "enter". Isso envia o comando para o console e o resultado é exibido logo abaixo.
+E aperte **CTRL+ENTER** (**CMD+ENTER** no mac). Isso envia o comando para o console e o resultado é exibido logo abaixo.
 
-```{r}
+```{r, echo = FALSE}
 1+1
 ```
 
-## Comandos pelo Script
 Agora escreva o seguinte código no Script.
 ```{r, eval=FALSE}
 # Gráfico dos números de 1 a 10
 plot(1:10)
 ```
-O primeiro comando *"# Gráfico dos números de 1 a 10"* é, na verdade, um comentário. Comentários em Scripts do R são seguidos do símbolo #, e tudo que estiver após # não será executado. É uma boa prática comentar seu código, para que ele seja de fácil manutenção, tanto para você mesmo quanto para outros colegas. O segundo comando é de um gráfico. Aperte "ctrl" + "enter" nas duas linhas. O gráfico aparecerá no canto inferior direito do RStudio.
+O primeiro comando `# Gráfico dos números de 1 a 10` é, na verdade, um **comentário**. Comentários nos scripts do R são seguidos do símbolo `#`, e tudo que estiver após `#` **não será executado**. *É uma boa prática comentar seu código*! Isso faz com que ele seja de fácil manutenção, tanto para você mesmo (acredite, depois de um tempo você não lembrará o que fez) quanto para seus colegas. 
 
-## Comandos pelo Script
+O segundo comando diz ao R para plotar um gráfico. Aperte **CTRL+ENTER** nas duas linhas. O gráfico aparecerá no canto inferior direito do RStudio.
+
 ![RStudio2](https://dl.dropboxusercontent.com/u/44201187/wp/rstudio2.png)
 
-## Comandos pelo Script
-Agora digite o seguinte comando no editor e aperte "ctrl" + "enter":
+Agora digite o seguinte comando no editor e aperte **CTRL+ENTER**:
 ```{r}
+# atribuindo o valor 15 a x
 x <- 15
 ```
 Atribuímos o valor 15 à variável x. Note que isso aparece no canto superior direito do RStudio.
 
 ![RStudio3](https://dl.dropboxusercontent.com/u/44201187/wp/rstudio3.png)
 
-## Comandos pelo Script
-O RStudio tem autocomplete. Escreve apenas `plo` e aperte **Tab**.
+### Autocomplete e documentação
+O RStudio tem *autocomplete*. No começo do seu aprendizado isto será bastante útil. Escreva apenas `plo` e aperte **Tab**. O RStudio sugerirá diversas possibilidades de comandos e objetos que se iniciam com `plo`:
 
 ![autocomplete](https://dl.dropboxusercontent.com/u/44201187/wp/autocomplete.png)
 
-## Comandos pelo Script
-Isso também funciona dentro da função, para vermos os parâmetros disponíveis. Escreva `plot()` e aperte **Tab**.
+Isso também funciona dentro de uma função para sabermos alguns dos argumentos disponíveis. Escreva `plot()` e aperte **Tab**. Note que os argumentos da função `plot` como `x`, `y`, ou `type` apareceram.
 
 ![autocomplete2](https://dl.dropboxusercontent.com/u/44201187/wp/autocomplete2.png)
 
-## Comandos pelo Script
-Outras teclas de atalho:
-\pause 
+Além do *autocomplete*, outra forma de enteder uma função é por meio da documentação do R. Para acessar a ajuda de uma função, utilize o comando `?` ou `help()` seguido do nome da função. 
 
-- **CTRL + 1**: Passa o cursor para o Script;
+```{r, eval=FALSE}
+?mean 
+help(mean) # equivalente a ?mean
+```
+
+![HELP](https://dl.dropboxusercontent.com/u/44201187/wp/help.png)
+
+Note que no cando direito do RStudio apareceu uma página de ajuda sobre a função `mean()`. A documentação das funções no R seguem mais ou menos este mesmo padrão. 
+
+A primeira coisa que vemos é `mean {base}` indicando que se trata da  função `mean()` do pacote `base`. Em *Description* há uma breve descrição do que é a função. Logo abaixo, em *Usage* vemos como utilizar o comando e, em *Arguments*, os parâmetros disponíveis. A seção *Value* explica o que a função `mean()` retorna. Em seguida temos algumas referências, funções relacionadas e os exemplos. 
+
+Honestamente, é provável que no início você tenha dificuldades de entender a documentação do R, pois você não saberá o significado de muitos termos. Mas, mesmo assim, não deixe de consultá-la. E, sempre que hover, *brinque com os exemplos*.
+
+![HELP2](https://dl.dropboxusercontent.com/u/44201187/wp/help2.png)
+
+Às vezes você não saberá exatamente o nome da função. Por exemplo, suponha que você queira gerar números aleatórios de uma distribuição normal multivariada, mas não se recorda o comando. Nestes caso, é possível realizar uma busca por texto.
+
+
+```{r, eval=FALSE}
+??"normal distribution" 
+help.search("normal distribution") # equivalente a ??"normal distribution"
+```
+
+Note que, entre os diversos resultados, aparece a função do pacote `MASS`, `mvrnorm()`, justamente o que você buscava.
+
+![HELP3](https://dl.dropboxusercontent.com/u/44201187/wp/help3.png)
+
+### Teclas de atalho
+O RStudio possui muitas teclas de atalho que facilitam sua vida. Você pode ver a lista completa em "Help" -> "Keyboard Shortcuts". Além do **CTRL + ENTER**, algumas teclas de atalho bastante úteis, que valem a pena você aprender agora no começo são:
+
+- **CTRL + 1**: Passa o cursor para o script;
 - **CTRL + 2**: Passa o cursor para o console;
 - **SETA PARA CIMA (no console)**: acessa o histórico de comandos anteriores.
-
-\pause 
-Abra um novo Script:
-
-- **CTRL + ALT + SETA PARA ESQUERDA OU DIREITA**: Navega entre as abas de script abertas.
-
-
-## Comandos pelo Script
-Outras teclas de atalho:
-\pause
-
+- **CTRL + ALT + SETA PARA ESQUERDA OU DIREITA**: Navega entre as abas de script abertas (abra um novo script antes para testar).
 - **CTRL + SHIFT + P**: "Previous command", roda o último comando executado;
 - **CTRL + SHIFT + ENTER**: "Source". Executa o Script inteiro;
 - **CTRL + S**: Salva o Script;
 
-\pause
+Muitos desses atalhos podem ser acessados via *mouse* (mas tente se acostumar a utilizar o teclado).
 
 ![RStudio4](https://dl.dropboxusercontent.com/u/44201187/wp/rstudio4.png)
 
-## Comandos pelo Script
-- **CTRL + L**: Limpa o console;
-- **CTRL + F**: Busca (e substituição). Aceita REGEX;
-- **CTRL + SHIFT + K**: Compila "Notebook" em PDF, HTML ou Word;
-- **ALT + SHIFT + K**: Veja os outros atalhos.
+Outros atalhos interessantes são:
 
-\pause
+- **CTRL + L**: Limpa o console;
+- **CTRL + F**: Busca (e substituição). Aceita [REGEX](http://en.wikipedia.org/wiki/Regular_expression) (veremos REGEX posteriormente);
+- **CTRL + SHIFT + K**: Compila "Notebook" em PDF, HTML ou Word (para isso você precisa ter uma distribuição de Latex e alguns pacotes instalados);
+- **ALT + SHIFT + K**: Veja a lista de atalhos.
 
 ![RStudio5](https://dl.dropboxusercontent.com/u/44201187/wp/rstudio5.png)
 
-## Ajuda - Função Específica
-\footnotesize
-```{r, eval=FALSE}
-?mean; help(mean)
-```
-\normalsize
-![HELP](https://dl.dropboxusercontent.com/u/44201187/wp/help.png)
+### Pacotes
 
-## Ajuda - Função Específica
-![HELP2](https://dl.dropboxusercontent.com/u/44201187/wp/help2.png)
+A principal forma de distribuição de códigos no R é por meio de pacotes. Um pacote pode ser entendido como um conjunto de códigos auto-contido que adiciona funcionalidades ao R. 
 
-## Ajuda - Busca por String
-\footnotesize
-```{r, eval=FALSE}
-??"normal distribution"; help.search("normal distribution")
-```
-\normalsize
-![HELP3](https://dl.dropboxusercontent.com/u/44201187/wp/help3.png)
+Em termos mais simples, pacotes são funções do R escritas pelos usuários para resolver vários problemas, como: (i) ler e salvar uma planilha de Excel; (ii) rodar um modelo de [random forest](http://en.wikipedia.org/wiki/Random_forest); (iii) analisar redes sociais etc. Atualmente existem [mais de 6.000 pacotes de R](http://cran.r-project.org). Ou seja, há pelo menos um pacote para quase qualquer problema de análise de dados que você imaginar. [Veja essa pequeno vídeo que o Roger Peng fez sobre pacotes no R](https://www.youtube.com/watch?v=yhTerzNFLbohttps://www.youtube.com/watch?v=yhTerzNFLbo).
 
-## Ajuda - Internet
-- StackOverflow (em Inglês e Português)
-![SO](https://dl.dropboxusercontent.com/u/44201187/wp/SO.png)
+Para carregar um pacote, use a função `library()`. 
 
-## Ajuda - Internet
-- **Grupos de e-mail**: www.r-project.org/mail.html
-    - **R Help**: lista de e-mails principal, para dúvidas gerais.
-    - **R Announce**: Lista de anúncios sobre desenvolvimento do R.
-    - **R Packages**: Lista de anúncios sobre pacotes do R.
-    - **R Devel**: Lista de discussão de desenvolvedores no R.
-
-- **Blogs**
-    - **R Bloggers**: consolidador de blogs sobre R.
-
-## Pacotes
-Configurar o R para encontrar os pacotes já instalados nos computadores do curso.
-```{r, eval=FALSE}
-# Onde o R está buscando os pacotes?
-.libPaths() 
-
-# Vamos dizer ao R para buscar
-# Também em "D:/Curso de R/Pacotes"
-.libPaths(c("D:/Curso de R/Pacotes", .libPaths()))
-```
-
-
-## Pacotes
-\footnotesize
-A principal forma de distribuição de códigos no R é por meio de pacotes. Um pacote pode ser entendido como um conjunto de códigos auto-contido que adiciona funcionalidades ao R.
-
-Para carregar um pacote, use a função \texttt{library()}. 
-
-Ao carregar um pacote, você está adicionando suas funções ao `search` da seção, permitindo que você chame estas funções diretamente. Por exemplo, a função `mvrnorm`, que gera números aleatórios de uma normal multivariada, está no pacote `MASS`.
+Carregar um pacote permite que você chame estas funções diretamente. Por exemplo, a função `mvrnorm`, que gera números aleatórios de uma normal multivariada, está no pacote `MASS`. Se você tentar chamar a função sem carregar o pacote, o R não a encontrará.
 ```{r, error=TRUE}
-Sigma <- matrix(c(10,3,3,2),nrow=2,ncol=2) # Matriz de Var-Covar
+Sigma <- matrix(c(10,3,3,2),nrow=2,ncol=2) # Matriz de Variância-Covariânccia
 mu <- c(1, 10) # Médias 
 x <- mvrnorm(n=100, mu, Sigma) # Tenta gerar 100 obs, mas dá erro
+```
 
+Após carragar o pacote, o comando funciona normalmente:
+
+```{r}
 library(MASS) # Carrega pacote
 x <- mvrnorm(n=100, mu, Sigma) # Agora funciona
 ```
 
-## Pacotes
-\footnotesize
-Para ver o que está no `search` do R, utilize a função `search()`. Note que o pacote MASS agora esta lá.
+
+Para ver quais pacotes estão carregados, utilize a função `search()`. Note que o pacote MASS esta lá.
 
 ```{r}
 search()
 ```
 
-Para descarregar um pacote, utilize a função `detach()`.
+Para descarregar um pacote, utilize a função `detach()` seguido de `package:nome_do_pacote`.
 
 ```{r}
 detach(package:MASS)
 ```
 
-Às vezes pacotes tem o mesmo nome de funções. Neste caso, se ambos forem carregados, a função que prevalece é a do pacote que foi carregado por último. Uma outra forma de resolver isso é usar o nome do pacote e o operador `::` antes de chamar a função. Neste caso não há ambiguidade. 
+Às vezes pacotes tem funções com o mesmo nome. Neste caso, se ambos forem carregados, a função que prevalece é a do pacote que foi carregado por último. Uma forma de resolver este confilto é chamar a função utilizando o nome do pacote e o operador `::`. Neste caso não haverá ambiguidade e o R saberá exatamente que função utilizar. 
 
 ```{r}
-x <- MASS::mvrnorm(n=100, mu, Sigma)
+# estamos dizendo ao R para buscar a função no pacote MASS
+x <- MASS::mvrnorm(n=100, mu, Sigma) 
 ```
 
-## Pacotes
 Você também pode carregar ou descarregar pacotes pelo menu do canto inferior direito do RStudio, clicando na caixa ao lado do nome do pacote.
 
 ![pacotes](https://dl.dropboxusercontent.com/u/44201187/wp/pacotes.png)
 
 
-## Pacotes
-Para instalar um pacote, use a função \texttt{install.packages()}.
-Por exemplo, o pacote \texttt{dplyr} é muito utilizado para manipulação de dados. Para instalá-lo e desinstalá-lo, temos os seguintes comandos.
+Para instalar um pacote, use a função `install.packages()`.
 
-\footnotesize 
+Por exemplo, o pacote `dplyr` é muito utilizado para manipulação de dados e iremos estudá-lo mais a frente. Para instalá-lo, digite o seguinte comando.
+
 ```{r, eval=FALSE}
-############## Não rode ##################
-utils::install.packages("dplyr", 
-                        repos="http://cran.r-project.org/")
-
-remove.packages(dplyr) 
-############## Não rode ##################
+install.packages("dplyr")
 ```
-A opção `repos="http://cran.r-project.org/"` diz ao R que é para baixar o pacote deste repositório. O `utils::` antes de `install.packages` diz que queremos acessar a função `install.packages` contida no pacote `utils`. 
 
-\normalsize
+Para deletar um pacote, utilize a função `remove.packages()` e para atualizar um pacote, a função `update.packages()`.
 
-
-## Pacotes, CRAN e Sites
+### CRAN
 Grande parte dos pacotes do R estão centralizados em um repositório chamado CRAN (The Comprehensive R Archive Network), com diversos espelhos ao redor do mundo.
 
-Agora, vamos explorar um pouco o site oficial do R, **www.r-project.org**, e do CRAN, **cran.r-project.org**.
+Tire um tempo agora para explorar um pouco o site oficial do R, **www.r-project.org**, e do CRAN, **cran.r-project.org**. Preste atenção principalmente nos seguinte itens:
 
-\pause 
-
-- Manuais, livros, documentação;
-- Listas de e-mais;
-- The R Journal;
-- Lista de pacotes;
-- Task Views.
-
-# Um breve exemplo
-
-## Imóveis do Plano Piloto
-Para ilustrar uma análise no R, veremos um exemplo simples com ofertas online de apartamentos à venda no Plano Piloto,do site *Wimoveis*. Os dados foram obtidos por meio de webscraping utilizando o R e já passaram por um processo de "limpeza" prévio.
-
-Não se preocupe em entender os comandos agora, iremos trabalhar isso no decorrer do curso.
-
-## Imóveis do Plano Piloto
-
-```{r, warning=FALSE, message=FALSE}
-# Carregando os pacotes que vamos usar
-library(dplyr)
-library(ggplot2)
-library(xtable)
+---- (detalhar) ----
 
 
-# Carregando os dados
-dados <- readRDS("Dados/wi.venda.rds")
+- [Manuais, livros, documentação](http://cran.r-project.org);
+- [Listas de e-mais](http://www.r-project.org/mail.html);
+- [The R Journal](http://journal.r-project.org/index.html);
+- [Lista de pacotes](http://cran.r-project.org);
+- [Task Views](http://cran.r-project.org).
 
-# Vendo a estrutura dos dados
-str(dados, vec.len=1)
-```
 
-## Imóveis do Plano Piloto
-\footnotesize
-```{r}
-# Calculando medianas por bairro
-mediana_bairro <- dados %>% 
-  group_by(bairro) %>% summarise(Median_Preco = median(preco),
-                                 Median_Quarto = median(quartos),
-                                 Median_pm2 = median(pm2),
-                                 N=n())
-mediana_bairro
-```
+---- Ajuda online ----
 
-## Imóveis do Plano Piloto
-\tiny
-```{r}
-# Rodando um modelo linear
-modelo <- lm(preco~m2*bairro + quartos , data=dados)
-summary(modelo)
-```
 
-## Imóveis do Plano Piloto
-\footnotesize
-```{r,fig.width=8, fig.height=3.5}
-# Box-Plot dos precos por bairro
-ggplot(dados, aes(bairro, preco, color=bairro)) + geom_boxplot()
-```
-
-## Imóveis do Plano Piloto
-\footnotesize
-```{r,fig.width=8, fig.height=3.5}
-# Gráfico de dispersão com regressão
-ggplot(dados, aes(m2, preco, color=factor(quartos), group=1)) + 
-  geom_point(shape=1) + geom_smooth(method="lm") + 
-  facet_wrap(~bairro)
-```
+---- Exemplo mínimo de uma análise de dados ----
