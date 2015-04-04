@@ -160,7 +160,7 @@ Vejamos um exemplo simples, a estrutura do objeto `x3`
 str(x3)
 ```
 
-Note que o resultado de `str()` fornece várias informações: idade trata-se de um vetor numérico (`num`), com 4 elementos (`[1:4]`) e os primeiros elementos do vetor são (`10 2 3 20`).
+Note que o resultado de `str()` fornece várias informações: `x3` trata-se de um vetor numérico (`num`), com 4 elementos (`[1:4]`) e os primeiros elementos do vetor são (`10 2 3 20`).
 
 Se você estiver utilizando o RStudio, um resumo dessa mesma informação já estará aparcendo no seu canto superior direito.
 
