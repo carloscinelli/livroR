@@ -27,6 +27,7 @@ ok <- ok & dados$bairro %in% c("Asa Sul", "Asa Norte", "Sudoeste", "Noroeste", "
 # separando outliers e limpos
 outliers <- dados[!ok,]
 dados <- dados[ok,]
+saveRDS(dados, "Dados/dados_ok.rds")
 ```
 
 # Dividir, Aplicar e Combinar
