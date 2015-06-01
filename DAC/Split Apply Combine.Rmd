@@ -6,7 +6,7 @@ output: html_document
 ---
 
 ```{r, echo = FALSE}
-setwd("~/Dropbox/R/livroR/manipDados")
+setwd("~/Dropbox/R/livroR/DAC")
 dados <- readRDS("Dados/dados.rds")
 dados <- na.omit(dados)
 dados$pm2 <- dados$preco / dados$m2
