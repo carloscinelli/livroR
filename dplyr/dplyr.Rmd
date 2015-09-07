@@ -36,7 +36,7 @@ As funções do `dplyr` são todas em formas de verbo e, se você sabe um pouco 
 
 ```{r, results = 'hide'}
 # com dplyr
-dplyr::filter(dados, pm2 > 96, tipo == "aluguel") 
+filter(dados, pm2 > 96, tipo == "aluguel") 
 
 # equivalente com R base
 dados[dados$pm2 > 96 & dados$tipo == "aluguel", ]
@@ -102,7 +102,7 @@ Vejamos exemplos de manipulações de dados com o `dplyr` usando nossa base de d
 
 ***Código:***
 ```{r, warning=FALSE}
-dados %>% dplyr::filter(imovel=="apartamento") %>%  
+dados %>% filter(imovel=="apartamento") %>%  
   select(bairro, preco, m2) %>% mutate(pm2 = preco/m2) %>% 
   arrange(desc(pm2)) %>% head
 ```
@@ -114,7 +114,7 @@ dados %>% dplyr::filter(imovel=="apartamento") %>%
 ***Código:***
 ```{r}
 dados %>% 
-  dplyr::filter(imovel=="apartamento", tipo=="venda") %>% 
+  filter(imovel=="apartamento", tipo=="venda") %>% 
   group_by(bairro) %>% 
   summarise(Mediana_Preco = median(preco),
             Mediana_M2 = median(m2),
