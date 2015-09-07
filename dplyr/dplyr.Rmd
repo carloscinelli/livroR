@@ -5,13 +5,7 @@ date: "28 de junho de 2015"
 output: html_document
 ---
 
-```{r, echo=FALSE, include=FALSE}
-library(knitr)
-hook2 <- function(x){ gsub("```\n+```\n", "", x) }
-knit_hooks$set(document = hook2)
-```
-
-# dplyr: Eficiente e intuitivo
+## Eficiente e intuitivo
 
 Com as funções da família `apply` e similares, você consegue fazer praticamente tudo o que você precisa para explorar os dados e deixá-los no(s) formato(s) necessário(s) para análise. E é importante você ser exposto a essas funções para se familiarizar com o ambiente base do R.
 
@@ -22,10 +16,17 @@ Se você ainda não tem o `dplyr` instalado na sua máquina, rode o seguinte com
 install.packages("dplyr", repos = "http://cran.r-project.org")
 ```
 
-
-## dplyr: Funções principais
-```{r, echo = FALSE, message =FALSE, warning=FALSE}
+Depois carregue o pacote:
+```{r,message =FALSE, warning=FALSE}
 library(dplyr)
+```
+
+
+## Funções principais
+```{r, echo = FALSE, message =FALSE, warning=FALSE}
+filter <- dplyr::filter
+lag <- dplyr::lag
+setwd("~/Dropbox/R/livroR/dplyr")
 dados <- tbl_df(readRDS("Dados/dados_ok.rds"))
 ```
 
@@ -34,9 +35,8 @@ As funções do `dplyr` são todas em formas de verbo e, se você sabe um pouco 
 - **filter**: filtra um `data.frame` com vetores lógicos. Em outras palavras, deixa apenas as linhas que satisfazem a certo critério. Por exemplo, nos nossos dados de imóveis, poderíamos filtrar somente aqueles anúncios de aluguel com valores de preço por metro quadrado menores ou maiores do que determinado nível.
 
 ```{r, results = 'hide'}
-library(dplyr)
 # com dplyr
-filter(dados, pm2 > 96, tipo == "aluguel") 
+dplyr::filter(dados, pm2 > 96, tipo == "aluguel") 
 
 # equivalente com R base
 dados[dados$pm2 > 96 & dados$tipo == "aluguel", ]
@@ -76,34 +76,45 @@ Os próximos dois verbos são `group_by` e `summarise` que, em geral, são utili
 
 - **summarise**:  o `summarise` transforma um vetor com vários números (por exemplo, um vetor de preços) em um único número de acordo com uma função (por exemplo, preço médio ou preço mediano). 
 
-## dplyr: Conectando tudo com %>%
+## Conectando tudo com %>%
 Até agora talvez você não tenha visto muita vantagem em utilizar o `dplyr`. Escrever `filter(dados, pm2 > 96, tipo == "aluguel") ` pode ser mais intuitivo do que `dados[dados$pm2 > 96 & dados$tipo == "aluguel", ]` mas talvez não tanto assim. A grande vantagem do pacote e das funções em formas de verbo aparece quando concatenamos várias operações em sequência com o auxílio do operador `%>%`.
 
 O `dplyr` foi desenhado para trabalhar com o *pipe operator* `%>%` do pacote `magritrr`. Basicamente, o operador faz com que você possa escrever `x %>% f()` ao invés de `f(x)`. Pode não parecer muito, mas na prática esse pequeno detalhe tem uma grande utilidade: você vai poder escrever o código de manipulação dos dados da mesma forma que você pensa nas atividades. 
 
-Pense numa receita que tenha as seguintes instruções: **junte os igredientes, misture e leve ao forno**. Na forma usual do R, tais instruções provavelmente teriam a seguinte forma `forno(misture(junte(ingredientes)))`. Note que temos que pensar "de dentro para fora". O primeiro comando que lemos é `forno` que, na verdade, é a última operação que será realizada! Com o *pipe operator*, por outro lado, você escreveria algo mais ou menos assim `ingredientes %>% junte %>% misture %>% forno`, isto é, na mesma ordem que as instruções verbais da receita. Parece mais intuitivo, não?
+Pense numa receita que tenha as seguintes instruções: **junte os igredientes, misture e leve ao forno**.  Na forma usual do R, tais instruções provavelmente teriam a seguinte forma: 
 
-Vejamos, exemplos de manipulações de dados com o `dplyr` usando nossa base de dados de imóveis. 
+```{r, eval = FALSE}
+forno(misture(junte(ingredientes)))
+```
+
+Note que temos que pensar "de dentro para fora". O primeiro comando que lemos é `forno` que, na verdade, é a última operação que será realizada! Com o *pipe operator*, por outro lado, você escreveria algo mais ou menos assim:
+```{r, eval = FALSE}
+ingredientes %>% junte %>% misture %>% forno
+```
+
+É quase igual a ler instruções verbais da receita. Parece mais intuitivo, não?
+
+Vejamos exemplos de manipulações de dados com o `dplyr` usando nossa base de dados de imóveis. 
 
 ### Filtrando, selecionando e criando colunas
 
-***Instrução:*** Pegue a base de dados `unicos`, filtre apenas os dados coletados de apartamento, selecione as colunas bairro e preco, crie uma coluna `pm2 = preco/m2`, ordene os dados de forma decrescente em pm2 e mostre apenas as 6 primeiras linhas (head).
+***Instrução:*** Filtre apenas os dados coletados de apartamento, selecione as colunas bairro e preco, crie uma coluna `pm2 = preco/m2`, ordene os dados de forma decrescente em `pm2` e mostre apenas as 6 primeiras linhas (`head`).
 
 ***Código:***
-```{r, warning=FALSE, eval=FALSE}
-dados %>% filter(imovel=="apartamento") %>%  
+```{r, warning=FALSE}
+dados %>% dplyr::filter(imovel=="apartamento") %>%  
   select(bairro, preco, m2) %>% mutate(pm2 = preco/m2) %>% 
-  arrange(desc(pm2)) %>% head()
+  arrange(desc(pm2)) %>% head
 ```
 
 ### Agrupando e sumarizando
 
-***Instrução:*** Pegue a base de dados `unicos`, filtre apenas os dados de venda de apartamento. Agrupe os dados por bairro. Calcule as medianas do preço, m2 e pm2 e o número de observações. Filtre apenas os grupos com mais de 30 observações. Ordene de forma decrescente com base na mediana de pm2.
+***Instrução:*** Filtre apenas os dados de venda de apartamento. Agrupe os dados por bairro. Calcule as medianas do `preco`, `m2` e `pm2`, bem como o número de observações. Filtre apenas os grupos com mais de 30 observações. Ordene de forma decrescente com base na mediana de `pm2`.
 
 ***Código:***
-```{r, eval=FALSE}
+```{r}
 dados %>% 
-  filter(imovel=="apartamento", tipo=="venda") %>% 
+  dplyr::filter(imovel=="apartamento", tipo=="venda") %>% 
   group_by(bairro) %>% 
   summarise(Mediana_Preco = median(preco),
             Mediana_M2 = median(m2),
@@ -115,12 +126,43 @@ dados %>%
 
 
 
-## Exercícios
-Sua vez.
-
-Considerando a base de dados, Responda:
+## Exercícios de fixação
+Considerando a base de dados, responda:
 
 - Qual o bairro com o maior preço mediano de venda?
 - Qual o bairro com o maior preço por m2 de venda?
 - Qual o bairro com o maior preço mediano de venda para apartamentos?
 - Qual o bairro com o maior preço mediano de venda para lojas?
+
+Soluções:
+
+```{r}
+# Qual o bairro com o maior preço mediano de venda?
+dados %>% 
+  filter(tipo == "venda") %>% # Filtra tipo "venda"
+  group_by(bairro) %>%  # agrupa por bairro
+  summarise(mediana = median(preco)) %>% # calcula mediana do preco
+  arrange(desc(mediana)) # ordena de forma decrescente
+
+# Qual o bairro com o maior preço por m2 de venda?
+dados %>% 
+  filter(tipo == "venda") %>% # Filtra tipo "venda"
+  group_by(bairro) %>%  # agrupa por bairro
+  summarise(mediana = median(pm2)) %>% # calcula mediana do pm2
+  arrange(desc(mediana)) # ordena de forma decrescente
+
+# Qual o bairro com o maior preço mediano de venda para apartamentos?
+dados %>% 
+  filter(tipo == "venda", imovel == "apartamento") %>% # Filtra tipo "venda" e imovel "apartamento"
+  group_by(bairro) %>%  # agrupa por bairro
+  summarise(mediana = median(preco)) %>% # calcula mediana do preco
+  arrange(desc(mediana)) # ordena de forma decrescente
+
+# Qual o bairro com o maior preço mediano de venda para lojas?
+dados %>% 
+  filter(tipo == "venda", imovel == "loja") %>% # Filtra tipo "venda" e imovel "loja"
+  group_by(bairro) %>%  # agrupa por bairro
+  summarise(mediana = median(preco)) %>% # calcula mediana do preco
+  arrange(desc(mediana)) # ordena de forma decrescente
+```
+

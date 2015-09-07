@@ -67,21 +67,23 @@ img {
 </div>
 
 
-<div id="dplyr-eficiente-e-intuitivo" class="section level1">
-<h1>dplyr: Eficiente e intuitivo</h1>
+<div id="eficiente-e-intuitivo" class="section level2">
+<h2>Eficiente e intuitivo</h2>
 <p>Com as funções da família <code>apply</code> e similares, você consegue fazer praticamente tudo o que você precisa para explorar os dados e deixá-los no(s) formato(s) necessário(s) para análise. E é importante você ser exposto a essas funções para se familiarizar com o ambiente base do R.</p>
 <p>Entretanto, muitas vezes essas funções podem ser pouco intuitivas para o iniciante e, além disso, <strong>deixar a desejar em performance</strong>. Como alternativa, existe um pacote <strong>bastante rápido</strong> para manipulação de <code>data.frame</code>s e com <strong>sintaxe muito intuitiva</strong> chamado <code>dplyr</code>. É provável que para o grosso de suas necessidades o <code>dplyr</code> seja a solução mais rápida e mais eficiente.</p>
 <p>Se você ainda não tem o <code>dplyr</code> instalado na sua máquina, rode o seguinte comando.</p>
 <pre class="r"><code>install.packages(&quot;dplyr&quot;, repos = &quot;http://cran.r-project.org&quot;)</code></pre>
-<div id="dplyr-funcoes-principais" class="section level2">
-<h2>dplyr: Funções principais</h2>
+<p>Depois carregue o pacote:</p>
+<pre class="r"><code>library(dplyr)</code></pre>
+</div>
+<div id="funcoes-principais" class="section level2">
+<h2>Funções principais</h2>
 <p>As funções do <code>dplyr</code> são todas em formas de verbo e, se você sabe um pouco de inglês, são razoavelmente auto-explicativas. Vamos ver aqui as seis principais funções que, em conjunto, já te permitem fazer bastante coisa. Todas as funções possuem a mesma estrutura: o primeiro argumento é o <code>data.frame</code> que você quer manipular e os argumentos subsequentes dizem o que fazer com os dados. Além disso, as funções do <code>dplyr</code> sempre retornam um <code>data.frame</code>, isto é, ela não vai tentar simplificar o resultado para um vetor ou outro tipo de objeto.</p>
 <ul>
 <li><strong>filter</strong>: filtra um <code>data.frame</code> com vetores lógicos. Em outras palavras, deixa apenas as linhas que satisfazem a certo critério. Por exemplo, nos nossos dados de imóveis, poderíamos filtrar somente aqueles anúncios de aluguel com valores de preço por metro quadrado menores ou maiores do que determinado nível.</li>
 </ul>
-<pre class="r"><code>library(dplyr)
-# com dplyr
-filter(dados, pm2 &gt; 96, tipo == &quot;aluguel&quot;) 
+<pre class="r"><code># com dplyr
+dplyr::filter(dados, pm2 &gt; 96, tipo == &quot;aluguel&quot;) 
 
 # equivalente com R base
 dados[dados$pm2 &gt; 96 &amp; dados$tipo == &quot;aluguel&quot;, ]</code></pre>
@@ -115,26 +117,40 @@ dados[order(dados$pm2), ]</code></pre>
 <li><p><strong>summarise</strong>: o <code>summarise</code> transforma um vetor com vários números (por exemplo, um vetor de preços) em um único número de acordo com uma função (por exemplo, preço médio ou preço mediano).</p></li>
 </ul>
 </div>
-<div id="dplyr-conectando-tudo-com" class="section level2">
-<h2>dplyr: Conectando tudo com %&gt;%</h2>
+<div id="conectando-tudo-com" class="section level2">
+<h2>Conectando tudo com %&gt;%</h2>
 <p>Até agora talvez você não tenha visto muita vantagem em utilizar o <code>dplyr</code>. Escrever <code>filter(dados, pm2 &gt; 96, tipo == &quot;aluguel&quot;)</code> pode ser mais intuitivo do que <code>dados[dados$pm2 &gt; 96 &amp; dados$tipo == &quot;aluguel&quot;, ]</code> mas talvez não tanto assim. A grande vantagem do pacote e das funções em formas de verbo aparece quando concatenamos várias operações em sequência com o auxílio do operador <code>%&gt;%</code>.</p>
 <p>O <code>dplyr</code> foi desenhado para trabalhar com o <em>pipe operator</em> <code>%&gt;%</code> do pacote <code>magritrr</code>. Basicamente, o operador faz com que você possa escrever <code>x %&gt;% f()</code> ao invés de <code>f(x)</code>. Pode não parecer muito, mas na prática esse pequeno detalhe tem uma grande utilidade: você vai poder escrever o código de manipulação dos dados da mesma forma que você pensa nas atividades.</p>
-<p>Pense numa receita que tenha as seguintes instruções: <strong>junte os igredientes, misture e leve ao forno</strong>. Na forma usual do R, tais instruções provavelmente teriam a seguinte forma <code>forno(misture(junte(ingredientes)))</code>. Note que temos que pensar “de dentro para fora”. O primeiro comando que lemos é <code>forno</code> que, na verdade, é a última operação que será realizada! Com o <em>pipe operator</em>, por outro lado, você escreveria algo mais ou menos assim <code>ingredientes %&gt;% junte %&gt;% misture %&gt;% forno</code>, isto é, na mesma ordem que as instruções verbais da receita. Parece mais intuitivo, não?</p>
-<p>Vejamos, exemplos de manipulações de dados com o <code>dplyr</code> usando nossa base de dados de imóveis.</p>
+<p>Pense numa receita que tenha as seguintes instruções: <strong>junte os igredientes, misture e leve ao forno</strong>. Na forma usual do R, tais instruções provavelmente teriam a seguinte forma:</p>
+<pre class="r"><code>forno(misture(junte(ingredientes)))</code></pre>
+<p>Note que temos que pensar “de dentro para fora”. O primeiro comando que lemos é <code>forno</code> que, na verdade, é a última operação que será realizada! Com o <em>pipe operator</em>, por outro lado, você escreveria algo mais ou menos assim:</p>
+<pre class="r"><code>ingredientes %&gt;% junte %&gt;% misture %&gt;% forno</code></pre>
+<p>É quase igual a ler instruções verbais da receita. Parece mais intuitivo, não?</p>
+<p>Vejamos exemplos de manipulações de dados com o <code>dplyr</code> usando nossa base de dados de imóveis.</p>
 <div id="filtrando-selecionando-e-criando-colunas" class="section level3">
 <h3>Filtrando, selecionando e criando colunas</h3>
-<p><strong><em>Instrução:</em></strong> Pegue a base de dados <code>unicos</code>, filtre apenas os dados coletados de apartamento, selecione as colunas bairro e preco, crie uma coluna <code>pm2 = preco/m2</code>, ordene os dados de forma decrescente em pm2 e mostre apenas as 6 primeiras linhas (head).</p>
+<p><strong><em>Instrução:</em></strong> Filtre apenas os dados coletados de apartamento, selecione as colunas bairro e preco, crie uma coluna <code>pm2 = preco/m2</code>, ordene os dados de forma decrescente em <code>pm2</code> e mostre apenas as 6 primeiras linhas (<code>head</code>).</p>
 <p><strong><em>Código:</em></strong></p>
-<pre class="r"><code>dados %&gt;% filter(imovel==&quot;apartamento&quot;) %&gt;%  
+<pre class="r"><code>dados %&gt;% dplyr::filter(imovel==&quot;apartamento&quot;) %&gt;%  
   select(bairro, preco, m2) %&gt;% mutate(pm2 = preco/m2) %&gt;% 
-  arrange(desc(pm2)) %&gt;% head()</code></pre>
+  arrange(desc(pm2)) %&gt;% head</code></pre>
+<pre><code>## Source: local data frame [6 x 4]
+## 
+##    bairro   preco     m2      pm2
+##     (chr)   (dbl)  (dbl)    (dbl)
+## 1 Asa Sul 4259579 215.72 19745.87
+## 2 Asa Sul 4259579 215.72 19745.87
+## 3 Asa Sul 4259579 215.72 19745.87
+## 4 Asa Sul 4259579 215.72 19745.87
+## 5 Asa Sul 4259579 215.72 19745.87
+## 6 Asa Sul 4259579 215.72 19745.87</code></pre>
 </div>
 <div id="agrupando-e-sumarizando" class="section level3">
 <h3>Agrupando e sumarizando</h3>
-<p><strong><em>Instrução:</em></strong> Pegue a base de dados <code>unicos</code>, filtre apenas os dados de venda de apartamento. Agrupe os dados por bairro. Calcule as medianas do preço, m2 e pm2 e o número de observações. Filtre apenas os grupos com mais de 30 observações. Ordene de forma decrescente com base na mediana de pm2.</p>
+<p><strong><em>Instrução:</em></strong> Filtre apenas os dados de venda de apartamento. Agrupe os dados por bairro. Calcule as medianas do <code>preco</code>, <code>m2</code> e <code>pm2</code>, bem como o número de observações. Filtre apenas os grupos com mais de 30 observações. Ordene de forma decrescente com base na mediana de <code>pm2</code>.</p>
 <p><strong><em>Código:</em></strong></p>
 <pre class="r"><code>dados %&gt;% 
-  filter(imovel==&quot;apartamento&quot;, tipo==&quot;venda&quot;) %&gt;% 
+  dplyr::filter(imovel==&quot;apartamento&quot;, tipo==&quot;venda&quot;) %&gt;% 
   group_by(bairro) %&gt;% 
   summarise(Mediana_Preco = median(preco),
             Mediana_M2 = median(m2),
@@ -142,20 +158,92 @@ dados[order(dados$pm2), ]</code></pre>
             Obs = length(pm2)) %&gt;% 
   filter(Obs &gt; 30) %&gt;%
   arrange(desc(Mediana_pm2))</code></pre>
+<pre><code>## Source: local data frame [6 x 5]
+## 
+##       bairro Mediana_Preco Mediana_M2 Mediana_pm2   Obs
+##        (chr)         (dbl)      (dbl)       (dbl) (int)
+## 1   Sudoeste        850000      86.00    9689.922 20356
+## 2   Noroeste        950000     100.90    9654.000 36610
+## 3    Asa Sul        950000     107.00    9066.667 35241
+## 4  Asa Norte        780000      94.00    9000.000 40023
+## 5 Lago Norte        470000      57.55    8329.250  5938
+## 6   Lago Sul        488307      88.55    5199.120   477</code></pre>
 </div>
 </div>
-<div id="exercicios" class="section level2">
-<h2>Exercícios</h2>
-<p>Sua vez.</p>
-<p>Considerando a base de dados <code>unicos</code>, Responda:</p>
+<div id="exercicios-de-fixacao" class="section level2">
+<h2>Exercícios de fixação</h2>
+<p>Considerando a base de dados, responda:</p>
 <ul>
 <li>Qual o bairro com o maior preço mediano de venda?</li>
 <li>Qual o bairro com o maior preço por m2 de venda?</li>
 <li>Qual o bairro com o maior preço mediano de venda para apartamentos?</li>
 <li>Qual o bairro com o maior preço mediano de venda para lojas?</li>
-<li>Aqui considere a base <em>imoveis</em>: encontre imóveis com as características que você deseja. Utilize os dados da coleta em 2014-08-31 e use a função <code>grepl()</code> em algum momento do filtro.</li>
 </ul>
-</div>
+<p>Soluções:</p>
+<pre class="r"><code># Qual o bairro com o maior preço mediano de venda?
+dados %&gt;% 
+  filter(tipo == &quot;venda&quot;) %&gt;% # Filtra tipo &quot;venda&quot;
+  group_by(bairro) %&gt;%  # agrupa por bairro
+  summarise(mediana = median(preco)) %&gt;% # calcula mediana do preco
+  arrange(desc(mediana)) # ordena de forma decrescente</code></pre>
+<pre><code>## Source: local data frame [6 x 2]
+## 
+##       bairro   mediana
+##        (chr)     (dbl)
+## 1   Lago Sul 2800000.0
+## 2   Noroeste  950000.0
+## 3    Asa Sul  834572.1
+## 4 Lago Norte  679000.0
+## 5  Asa Norte  600000.0
+## 6   Sudoeste  520000.0</code></pre>
+<pre class="r"><code># Qual o bairro com o maior preço por m2 de venda?
+dados %&gt;% 
+  filter(tipo == &quot;venda&quot;) %&gt;% # Filtra tipo &quot;venda&quot;
+  group_by(bairro) %&gt;%  # agrupa por bairro
+  summarise(mediana = median(pm2)) %&gt;% # calcula mediana do pm2
+  arrange(desc(mediana)) # ordena de forma decrescente</code></pre>
+<pre><code>## Source: local data frame [6 x 2]
+## 
+##       bairro  mediana
+##        (chr)    (dbl)
+## 1   Noroeste 9666.561
+## 2   Sudoeste 9473.684
+## 3    Asa Sul 9210.526
+## 4  Asa Norte 9000.000
+## 5 Lago Norte 6753.247
+## 6   Lago Sul 5516.129</code></pre>
+<pre class="r"><code># Qual o bairro com o maior preço mediano de venda para apartamentos?
+dados %&gt;% 
+  filter(tipo == &quot;venda&quot;, imovel == &quot;apartamento&quot;) %&gt;% # Filtra tipo &quot;venda&quot; e imovel &quot;apartamento&quot;
+  group_by(bairro) %&gt;%  # agrupa por bairro
+  summarise(mediana = median(preco)) %&gt;% # calcula mediana do preco
+  arrange(desc(mediana)) # ordena de forma decrescente</code></pre>
+<pre><code>## Source: local data frame [6 x 2]
+## 
+##       bairro mediana
+##        (chr)   (dbl)
+## 1    Asa Sul  950000
+## 2   Noroeste  950000
+## 3   Sudoeste  850000
+## 4  Asa Norte  780000
+## 5   Lago Sul  488307
+## 6 Lago Norte  470000</code></pre>
+<pre class="r"><code># Qual o bairro com o maior preço mediano de venda para lojas?
+dados %&gt;% 
+  filter(tipo == &quot;venda&quot;, imovel == &quot;loja&quot;) %&gt;% # Filtra tipo &quot;venda&quot; e imovel &quot;loja&quot;
+  group_by(bairro) %&gt;%  # agrupa por bairro
+  summarise(mediana = median(preco)) %&gt;% # calcula mediana do preco
+  arrange(desc(mediana)) # ordena de forma decrescente</code></pre>
+<pre><code>## Source: local data frame [6 x 2]
+## 
+##       bairro mediana
+##        (chr)   (dbl)
+## 1   Noroeste 1107735
+## 2    Asa Sul 1050000
+## 3  Asa Norte  550000
+## 4 Lago Norte  430000
+## 5   Sudoeste  330000
+## 6   Lago Sul  320000</code></pre>
 </div>
 
 
