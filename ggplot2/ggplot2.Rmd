@@ -137,7 +137,7 @@ smooth    (aplica modelo estatístico)   |`geom_smooth()`
 
 Aqui, em virtude do espaço, mostraremos apenas um exemplo de gráfico de densidade e boxplot. Experimente em seu computador diferentes **geoms** na base de dados de imóveis. 
 
-```{r, eval = FALSE}
+```{r}
 # Density
 ggplot(data=venda, aes(x=preco)) + geom_density(fill = "darkred")
 
