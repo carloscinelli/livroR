@@ -4,8 +4,8 @@ author: "Carlos Cinelli"
 date: "Maio de 2015"
 output: html_document
 ---
-```{r, include=FALSE, echo=FALSE}
-options(width=60)
+```{r, include = FALSE, echo = FALSE}
+options(width = 120)
 library(ggplot2)
 library(dplyr)
 library(gridExtra)
@@ -24,7 +24,7 @@ Antes de continuar, você precisa instalar e carregar os pacotes que vamos utili
 
 ```{r, eval = FALSE}
 # Instalando os pacotes (caso não os tenha instalados)
-install.packages(c("ggplot2","ggthemes", "gridExtra"))
+install.packages(c("ggplot2", "ggthemes", "gridExtra"))
 
 # Carregando os pacotes
 library(ggplot2)
@@ -39,6 +39,7 @@ Também vamos utilizar uma base de dados de anúncio de imóveis de Brasília qu
 arquivo <- url("https://dl.dropboxusercontent.com/u/44201187/imoveis.rds")
 con <- gzcon(arquivo)
 dados <- readRDS(con)
+close(con)
 
 #  Filtra apenas para venda
 venda <- dados[dados$tipo == "venda", ]
@@ -48,23 +49,25 @@ venda <- dados[dados$tipo == "venda", ]
 
 Mas o que seria essa gramática de gráficos estatísticos? Podemos dizer que um gráfico estatístico é um **mapeamento** dos dados para propriedades **estéticas** (cor, forma, tamanho) e **geométricas** (pontos, linhas, barras) da tela. O gráfico também pode conter **transformações estatísticas** e múltiplas **facetas** para diferentes subconjuntos dos dados. É a combinação de todas essas **camadas**  que forma seu gráfico estatístico.
 
-Deste modo, os gráficos no `ggplot2` são construídos por meio da **adição de camadas**. Cada camada, *grosso modo*, é composta de:
+Deste modo, os gráficos no `ggplot2` são construídos por meio da **adição de camadas**. 
+Cada gráfico, *grosso modo*, é composto de:
 
 - Uma base de dados (um data.frame, preferencialmente no formato **long**);
 - Atributos estéticos (**aes**thetics);
-- Objetos **geom**étricos;
-- Transformações e**stat**ísticas;
+- Camadas, contendo
+    - Objetos **geom**étricos;
+    - Transformações e**stat**ísticas;
 - **Facet**as; e,
 - Demais ajustes.
 
 
-Vejamos um exemplo simples de **scatter plot** com os dados de preço e metro quadrado dos imóveis da nossa base de dados.
+Vejamos um exemplo simples de **diagrama de dispersão** com os dados de preço e metro quadrado dos imóveis da nossa base de dados.
 
 ```{r, eval = FALSE}
-ggplot(data=venda, aes(x=m2, y=preco)) + geom_point()
+ggplot(data = venda, aes(x = m2, y = preco)) + geom_point()
 ```
 
-Traduzindo o comando acima do `gpplot2`,  nós começamos chamando a função `ggplot()` que inicializa o gráfico com os seguintes parâmetros:
+Traduzindo o comando acima do `ggplot2`,  nós começamos chamando a função `ggplot()` que inicializa o gráfico com os seguintes parâmetros:
 
 - **data**: aqui indicamos que estamos usando a base de dados `venda`;
 - **aes**:  aqui indicamos as **estéticas** que estamos mapeando. Mais especificamente, estamos dizendo que vamos mapear o eixo x na variável `m2` e o eixo y na variável `preco`.
@@ -80,16 +83,17 @@ Com relação às transformações estatísticas, neste caso não estamos realiz
 O que resulta no seguinte gráfico:
 
 ```{r, echo = FALSE}
-ggplot(data=venda, aes(x=m2, y=preco)) + geom_point()
+ggplot(data = venda, aes(x = m2, y = preco)) + geom_point()
 ```
 
 ### aes: mapeando cor, tamanho, forma etc
+
 Um gráfico no plano tem apenas duas coordenadas, `x` e `y`, mas nossa base de dados tem, em geral, vários colunas... como podemos representá-las? Uma forma de fazer isso é mapear variáveis em outras propriedades estéticas do gráfico, tais como **cor**, **tamanho** e **forma**. Isto é, vamos expandir as variáveis que estamos meapeando nos **aes**thetics. 
 
 Para exemplificar, vamos mapear cada bairro em uma cor diferente e o número de quartos no tamanho dos pontos. 
 
 ```{r, eval = FALSE}
-ggplot(data=venda, aes(x = m2, y = preco, color = bairro, size = quartos)) + 
+ggplot(data = venda, aes(x = m2, y = preco, color = bairro, size = quartos)) + 
   geom_point()
 ```
 Nosso esquema anterior ficaria da seguinte forma.
@@ -99,7 +103,7 @@ Nosso esquema anterior ficaria da seguinte forma.
 E o gráfico resultante:
 
 ```{r, echo = FALSE}
-ggplot(data=venda, aes(x=m2, y=preco, color=bairro, size = quartos)) + 
+ggplot(data = venda, aes(x = m2, y = preco, color = bairro, size = quartos)) + 
   geom_point()
 ```
 
@@ -117,8 +121,8 @@ Por exemplo, no comando abaixo mudamos a cor, o tamanho e a forma dos pontos do 
 # muda o tamanho, a cor e a forma dos pontos
 # note que não há legenda, pois não estamos 
 # mapeando os dados a atributos estéticos
-ggplot(data=venda, aes(x=m2, y=preco)) + 
-  geom_point(color="darkblue", shape=21, size = 5)
+ggplot(data = venda, aes(x = m2, y = preco)) + 
+  geom_point(color = "darkblue", shape = 21, size = 5)
 ```
 
 ## geoms: pontos, retas, boxplots, regressões
@@ -139,10 +143,11 @@ Aqui, em virtude do espaço, mostraremos apenas um exemplo de gráfico de densid
 
 ```{r}
 # Density
-ggplot(data=venda, aes(x=preco)) + geom_density(fill = "darkred")
+ggplot(data = venda, aes(x = preco)) + geom_density(fill = "darkred")
 
 # Boxplot
-ggplot(data=venda, aes(x=bairro, y=preco)) + geom_boxplot(aes(fill = bairro))
+ggplot(data = venda, aes(x = bairro, y = preco)) + 
+  geom_boxplot(aes(fill = bairro))
 ```
 
 ## Combinando aes e geom
@@ -154,31 +159,35 @@ O comando abaixo mapeia o bairro como cor dentro do comando `ggplot()`. Dessa fo
 
 ```{r, eval = FALSE}
 # aes(color) compartilhado
-ggplot(venda, aes(m2, preco, color=bairro)) + geom_point() + 
-  geom_smooth(method="lm") 
+ggplot(venda, aes(m2, preco, color = bairro)) + 
+  geom_point() + 
+  geom_smooth(method = "lm") 
 ```
 
 ![esquema ggplo2](imagens/ggplot_3.png)
 
 ```{r, echo = FALSE}
 # aes(color) compartilhado
-ggplot(venda, aes(m2, preco, color=bairro)) + geom_point() + 
-  geom_smooth(method="lm") 
+ggplot(venda, aes(m2, preco, color = bairro)) + 
+  geom_point() + 
+  geom_smooth(method = "lm") 
 ```
 
 Mas e se você quisesse manter os pontos com cores diferentes com apenas uma regressão para todas observações? Neste caso, temos que mapear os bairros nas cores **apenas** para os pontos. Note que no comando a seguir passamos a estética `color = bairro` apenas para `geom_poin()`.
 
 ```{r, eval = FALSE}
 # aes(color) apenas nos pontos
-ggplot(venda, aes(m2, preco)) + geom_point(aes(color=bairro)) + 
-  geom_smooth(method="lm") 
+ggplot(venda, aes(m2, preco)) + 
+  geom_point(aes(color = bairro)) + 
+  geom_smooth(method = "lm") 
 ```
 
 ![esquema ggplo2](imagens/ggplot_2.png)
 
 ```{r, echo = FALSE}
 # aes(color) apenas nos pontos
-ggplot(venda, aes(m2, preco)) + geom_point(aes(color=bairro)) + 
+ggplot(venda, aes(m2, preco)) + 
+  geom_point(aes(color=bairro)) + 
   geom_smooth(method="lm") 
 ```
 
@@ -197,21 +206,26 @@ ggplot(mpg, aes(displ, hwy)) + geom_point()
 A imagem parece revelar uma relação não linear entre cilindradas e milhas por galão. Vejamos, todavia, o mesmo gráfico mapeando o número de cilindros nas cores:
 
 ```{r}
-ggplot(mpg, aes(displ, hwy, col=factor(cyl))) + geom_point() + 
+# Como cyl é originalmente do tipo numérico, convertemos para factor
+ggplot(mpg, aes(displ, hwy, col = factor(cyl))) + 
+  geom_point() + 
   geom_smooth(method = "lm")
 ```
 
 Note que o gráfico parece revelar que, uma vez condicionada ao número de cilindros, a relação entre cilindradas e milhas por galão é razoavelmente linear!
 
 ### Adicionando facetas
+
 No `ggplot2()`, você pode dividir o gráfico em diversos subgráficos utilizando variáveis categóricas. Vejamos um exemplo utilizando `facet_wrap()`.
 
 ```{r}
 ggplot(venda, aes(m2, preco)) + 
-  geom_point(aes(col=factor(quartos))) + 
-  geom_smooth(method="lm") + 
+  geom_point(aes(col = factor(quartos))) + 
+  geom_smooth(method = "lm") + 
   facet_wrap(~bairro) 
 ```
+
+Outro exemplo
 
 ### Personalizando seu o gráfico 
 
@@ -222,9 +236,12 @@ Entretanto, vejamos um exemplo de histograma com a personalização de alguns el
 ```{r}
 media <- mean(log(venda$preco))
 dp <- sd(log(venda$preco))
-ggplot(data=venda, aes(x=log(preco))) + 
-  geom_histogram(aes(y = ..density..), binwidth=0.3, fill="lightblue", col="black") +
-  stat_function(fun=dnorm, args=list(mean=media, sd=dp), color="red") +
+
+ggplot(data = venda, aes(x = log(preco))) + 
+  geom_histogram(aes(y = ..density..), binwidth = 0.3, 
+                 fill = "lightblue", col = "black", alpha = 0.5) +
+  stat_function(fun = dnorm, args = list(mean = media, sd = dp), 
+                color = "red") +
   geom_rug() + # adiciona rug no eixo x
   xlab("Log do Preço") + # adiciona descrição do eixo x
   ylab("Densidade") + # adiciona descrição do eixo y
@@ -240,9 +257,12 @@ O pacote `ggthemes` já vem com vários temas pré-programados, replicando forma
 
 Experimente com os temas abaixo  (gráficos omitidos aqui):
 ```{r, fig.show='hide'}
-grafico <- ggplot(mpg, aes(displ, hwy, col=factor(cyl))) + geom_point() + 
-  geom_smooth(method = "lm", se = F) + ggtitle("Cilindradas, cilindros e Milhas por Galão") + 
-  ylab("Milhas por galão") + xlab("Cilindradas")
+grafico <- ggplot(mpg, aes(displ, hwy, col = factor(cyl))) + 
+  geom_point() + 
+  geom_smooth(method = "lm", se = F) + 
+  ggtitle("Cilindradas, cilindros e Milhas por Galão") + 
+  ylab("Milhas por galão") + 
+  xlab("Cilindradas")
 
 # Gráfico original
 grafico 
