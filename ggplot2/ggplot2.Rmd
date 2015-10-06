@@ -225,8 +225,6 @@ ggplot(venda, aes(m2, preco)) +
   facet_wrap(~bairro) 
 ```
 
-Outro exemplo
-
 ### Personalizando seu o gráfico 
 
 Depois de chegar em um gráfico interessante, você provavelmente vai querer personalizar detalhes estéticos deste gráfico para apresentá-lo ao público. No `ggplot2` é possível fazer o ajuste fino de diversos elementos do seu gráfico e o detalhamento disso fugiria ao escopo deste livro.
