@@ -1,0 +1,439 @@
+---
+title: "Textos - Parte 1"
+author: "Carlos Cinelli"
+date: "18 de Setembro de 2014"
+---
+
+
+```{r config, echo=FALSE, include=FALSE}
+options(width=100)
+library(knitr)
+```
+
+
+## Geral
+
+### Criando textos
+
+No R, textos são representados por vetores do tipo `character`. Você pode criar manualmente um elemento do tipo `character` colocando o texto entre aspas, podendo ser tanto aspas simples ('texto') quanto aspas duplas ("texto").
+
+```{r texto-aspas}
+# criando um vetor de textos
+# aspas simples
+x1 <- 'texto 1'
+
+# aspas duplas
+x2 <- "texto 2"
+```
+
+Como já vimos, para saber se um objeto é do tipo texto você pode utilizar a função `is.character()` e também é possível converter objetos de outros tipos para textos utilizando a função `as.character()`.
+
+```{r as-is-character}
+# criando um vetor de inteiros
+x3 <- 1:10
+
+# É texto? Não.
+is.character(x3)
+
+# Convertendo para texto
+x3 <- as.character(x3)
+
+# Agora é texto? Sim.
+is.character(x3)
+```
+
+### Operações com textos
+
+Operações como ordenação e comparações são definidas para textos. A ordenação de um texto é feita de maneira lexicográfica, tal como em um dicionário. 
+
+```{r sort}
+# ordenação de letras
+sort(c("c", "d", "a", "f"))
+
+# ordenação de palavras
+# tal como um dicionário
+sort(c("cor", "casa", "árvore", "zebra", "branco", "banco"))
+```
+
+Como a comparação é lexicográfica, é preciso tomar alguns cuidados. Por exemplo, o texto "2" é maior do que o texto "100". Se por acaso seus números forem transformados em texto, você não vai receber uma mensagem de erro na comparação `"2" > "100"` mas sim um resultado errado: `TRUE`.
+
+```{r comparacao-cuidado}
+# CUIDADO!
+2   >  100
+"2" > "100"
+
+# b > a
+"b" > "a"
+
+# A > a
+"A" > "a"
+
+# casa > banana
+"casa" > "banana"
+```
+
+
+### Imprimindo textos
+
+Se você estiver usando o `R` de modo interativo, chamar o objeto fará com que ele seja exibido na tela usando `print()`.
+
+```{r print}
+# Imprime texto na tela
+print(x1)
+
+# Quando em modo interativo
+# Equivalente a print(x1)
+x1
+```
+
+Se você não estiver usando o `R` de modo interativo --- como ao dar `source()` em um script ou dentro de um loop --- é preciso chamar explicitamente uma função que exiba o texto na tela.
+
+```{r loop-print}
+# sem print não acontece nada
+for(i in 1:3) i
+
+# com print o valor de i é exibido
+for(i in 1:3) print(i)
+```
+
+Existem outras opções para "imprimir" e formatar textos além do `print()`. Uma função bastante utilizada para exibir textos na tela é a função `cat()` (concatenate and print).
+
+```{r cat}
+cat(x1)
+
+cat("A função cat exibe o texto sem aspas:", x1)
+```
+
+Por padrão, `cat()` separa os textos com um espaço em branco, mas é possível alterar este comportamento com o argumento `sep`.
+
+```{r cat-sep}
+cat(x1, x2)
+
+cat(x1, x2, sep = " - ")
+```
+
+Outra funções úteis são `sprintf()` e `format()`, principalmente para formatar e exibir números. Para mais detalhes sobre as funções, olhar a ajuda `?sprintf` e `?format`.
+
+```{r sprintf-format}
+# %.2f (float, 2 casas decimais)
+sprintf("R$ %.2f", 312.12312312)
+
+# duas casas decimais, separador de milhar e decimal
+format(10500.5102, nsmall=2, big.mark=".", decimal.mark=",")
+```
+
+### Caracteres especiais
+
+
+Como fazemos para gerar um texto com separação entre linhas no R? Criemos a separação de linhas manualmente para ver o que acontece:
+
+```{r nova-linha}
+texto_nova_linha <- "texto
+com nova linha"
+
+texto_nova_linha
+```
+
+Note que aparece um `\n` no meio do texto. Isso é um caractere especial: `\n` simboliza justamente uma nova linha.  Quando você exibe um texto na tela com `print()`, caracteres especiais não são processados e aparecem de maneira literal. Já se você exibir o texto na tela usando `cat()`, os caracteres especiais serão processados. No nosso exemplo, o `\n` será exibido como uma nova linha.
+
+```{r cat-vs-print}
+# print: \n aparece literalmente
+print(texto_nova_linha)
+
+# cat: \n aparece como nova linha
+cat(texto_nova_linha)
+```
+
+Caracteres especiais são sempre "escapados" com a barra invertida `\` . Além da nova linha (`\n`), outros caracteres especiais recorrentes são o `tab` (`\t`) e a própria barra invertida, que precisa ela mesma ser escapada (`\\`). Vejamos alguns exemplos:
+
+```{r caract-esp}
+cat("colocando uma \nnova linha")
+cat("colocando um \ttab")
+cat("colocando uma \\ barra")
+cat("texto com novas linhas e\numa barra no final\n\\")
+```
+
+Para colocar aspas simples ou duplas **dentro** do texto há duas opções. A primeira é alternar entre as aspas simples e duplas, uma para definir o objeto do tipo `character` e a outra servido literalmente como aspas.
+
+```{r aspas-aspas}
+# Aspas simples dentro do texto
+aspas1 <- "Texto com 'aspas' simples dentro"
+aspas1 
+
+# Aspas duplas dentro do texto
+aspas2  <- 'Texto com "aspas" duplas dentro'
+cat(aspas2)
+```
+
+Outra opção é colocar as aspas como caracter expecial. Neste caso, não é preciso alternar entre aspas simples e duplas.
+
+```{r aspas-especial}
+aspas3 <- "Texto com \"aspas\" duplas"
+cat(aspas3)
+
+aspas4 <- 'Texto com \'aspas\' simples'
+cat(aspas4)
+```
+
+### Utilidade das funções de exibição
+
+Qual a utilidade de funções que exibam coisas na tela? 
+
+Um caso bastante comum é exibir mensagens durante a execução de alguma rotina ou função. Por exemplo, você pode exibir o percentual de conclusão de um loop a cada 25 rodadas:
+
+```{r cat-loop}
+for(i in 1:100){ 
+  
+  # imprime quando o resto da divisão
+  # de i por 25 é igual a 0
+  if(i %% 25 == 0){
+    cat("Executando: ", i, "%\n", sep = "")
+  }
+  
+  # alguma rotina
+  Sys.sleep(0.01)
+}
+
+```
+
+Outro uso frequente é criar métodos de exibição para suas próprias classes. Vejamos um exemplo simples de uma fução base do `R`, a função `rle()`, que computa tamanhos de sequências repetidas de valores em um vetor. O resultado da função é uma lista, mas ao exibirmos o objeto na tela, o `print` não é igual ao de uma lista comum:
+
+```{r rle-exemplo}
+x <- rle(c(1,1,1,0))
+
+# resultado é uma lista
+str(x)
+
+# print do objeto na tela 
+# não é como uma lista comum
+x
+
+# tirando a classe do objeto
+# veja que o print agora é como uma lista comum
+unclass(x)
+```
+
+Isso ocorre porque a classe `rle` tem um método de `print` próprio, `print.rle()`:
+
+```{r rle-codigo}
+print.rle <- function (x, digits = getOption("digits"), prefix = "", ...) 
+{
+    if (is.null(digits)) 
+        digits <- getOption("digits")
+    cat("", "Run Length Encoding\n", "  lengths:", sep = prefix)
+    utils::str(x$lengths)
+    cat("", "  values :", sep = prefix)
+    utils::str(x$values, digits.d = digits)
+    invisible(x)
+}
+```
+
+
+### Tamanho do texto
+
+A função `nchar()` retorna o número de caracteres de um elemento do tipo texto. Note que isso é diferente da função `length()` que retorna o tamanho do **vetor**.
+
+```{r nchar}
+# O vetor x1 tem apenas um elemento
+length(x1)
+
+# O elemento do vetor x1 tem 7 caracteres
+# note que espaços em brancos contam
+nchar(x1) 
+```
+
+A função `nchar()` é vetorizada. 
+
+```{r nchar vetor}
+# vetor do tipo character
+y <- c("texto 1", "texto 11")
+
+# vetor tem dois elementos
+length(y)
+
+# O primeiro elemento tem 7 caracteres
+# O segundo 8.
+nchar(y) # vetorizada
+```
+
+
+## Manipulando textos
+
+Manipulação de textos é uma atividade bastante comum na análise de dados. O R possui uma série de funções para isso e suporta o uso de expressões regulares. Nesta seção veremos exemplos simples das principais funções de manipulação de textos.  Na próxima seção abordaremos um pouco de expressões regulares.
+
+#### Colando (ou concatenando) textos
+
+A função `paste()` é uma das funções mais úteis para manipulação de textos. Como o próprio nome diz, ela serve para "colar" textos.
+
+```{r paste}
+# Colando textos
+tipo <- "Apartamento"
+bairro <- "Asa Sul"
+texto <- paste(tipo,"na", bairro )
+texto
+```
+
+Por default, `paste()` separa os textos com um espaço em branco. Você pode alterar isso modificando o argumento `sep`. Caso não queira nenhum espaço entre as strings, basta definir `sep = ""` ou utilizar a função `paste0()`. Como usual, todas essas funções são vetorizadas.
+
+```{r paste-sep}
+# separação padrão
+paste("x", 1:5, sep="")
+
+# separando por ponto
+paste("x", 1:5, sep=".")
+
+# sem separação
+paste("x", 1:5, sep ="")
+
+# sem separação, usando paste0.
+paste0("x", 1:5)
+```
+
+Note que foram gerados 5 elementos diferentes nos exemplos acima. É possível "colar" todos os elementos em um único texto com a opção `collapse()`.
+
+```{r paste-collapse}
+paste("x", 1:5, sep="", collapse=" ")
+```
+
+#### Separando textos
+
+Outra atividade frequente em análise de dados é separar um texto em elementos diferentes. Por exemplo, suponha que você tenha que trabalhar com um conjunto de números, mas que eles estejam em um formato de texto separados por ponto e vírgula:
+
+```{r dados-juntos}
+dados <- "1;2;3;4;5;6;7;8;9;10"
+dados
+```
+
+Com a função `strsplit()` é fácil realizar essa tarefa:
+
+```{r strsplit}
+dados_separados <- strsplit(dados, split=";")
+dados_separados
+```
+
+Note que o resultado da função é uma lista. Agora é possível converter os dados em números e trabalhar normalmente.
+```{r convert-number}
+# convertendo o resultado em número
+dados_separados <- as.numeric(dados_separados[[1]])
+
+# agora é possível trabalhar com os números
+# média
+mean(dados_separados)
+# soma
+sum(dados_separados)
+```
+
+
+
+#### Encontrando partes de um texto
+
+Quando você estiver trabalhando com suas bases de dados, muitas vezes será preciso encontrar certas palavras ou padrões dentro do texto. Por exemplo, imagine que você tenha uma base de dados de aluguéis de apartamentos e você gostaria de encontrar imóveis em um certo endereço. Vejamos este exemplo com dados online de aluguel em Brasília.
+
+```{r carrega-dados}
+# Carrega arquivo de anúncios de aluguel (2014)
+arquivo <- url("https://dl.dropboxusercontent.com/u/44201187/aluguel.rds")
+con <- gzcon(arquivo)
+aluguel <- readRDS(con)
+close(con)
+```
+
+Vejamos a estrutura da nossa base de dados:
+
+```{r str-aluguel}
+str(aluguel)
+```
+
+Temos mais de 2 mil anúnciso, como encontrar aqueles apartamentos que queremos, como, por exemplos, os que contenham "CLN 310" no endereço? Neste caso você pode utilizar a função `grep()` para encontrar padrões dentro do texto. A função retornará o índice das observações que contém o texto:
+
+```{r grep}
+busca_indice <- grep(pattern = "CLN 310", aluguel$endereco)
+busca_indice
+aluguel[busca_indice, ]
+```
+
+Uma variante da função `grep()` é a função `grepl()`, que realiza a mesma coisa, mas ao invés de retornar um índice numérico, retorna um vetor lógico:
+
+```{r grepl}
+busca_logico <- grepl(pattern = "CLN 310", aluguel$endereco)
+str(busca_logico)
+aluguel[busca_indice, ]
+```
+
+Nossa busca é útil, mas ainda é simples. Quando aprendermos expressões regulares, essas buscas ficarão bem mais poderosas. Lá também aprenderemos outras funções como `regexpr()`, `gregexpr()`, `regexec()` e `regmatches()`.
+
+### Substituindo partes de um texto
+
+A função `sub()` substitui o primeiro padrão (`pattern`) que encontra:
+
+```{r sub}
+texto2 <- paste(texto, ", Apartamento na Asa Norte")
+texto2
+
+# Vamos substituir "apartamento" por "Casa"
+# Mas apenas o primeiro caso
+sub(pattern = "Apartamento",
+    replacement = "Casa",
+    texto2) 
+```
+
+Já a função `gsub()` substitui todos os padrões que encontra:
+
+```{r gsub}
+# Vamos substituir "apartamento" por "Casa"
+# Agora em todos os casos
+gsub(pattern="Apartamento",
+    replacement="Casa",
+    texto2)
+```
+
+Você pode usar as funções `sub()` e `gsub()`  para "deletar" partes indesejadas do texto, basta colocar como `replacement` um caractere vazio `""`. Um exemplo bem corriqueiro, quando se trabalha com com nomes de arquivos, é a remoção das extensões:
+
+```{r gsub-csv}
+# nomes dos arquivos
+arquivos <- c("simulacao_1.csv","simulacao_2.csv")
+
+# queremos eliminar a extensão .csv
+# note que o ponto precisa ser escapado
+nomes_sem_csv <- gsub("\\.csv", "", arquivo)
+nomes_sem_csv
+```
+
+#### Extraindo partes específicas de um texto
+
+Às vezes você precisa extrair apenas algumas partes específicas de um texto, em determinadas posições. Para isso você pode usar as funções `substr()` e `substring()`.
+
+Para essas funções, você basicamente passa as posições dos caracteres inicial e final que deseja extrair.
+
+```{r substr}
+# extraindo caracteres da posição 4 à posição 8
+x <- "Um texto de exemplo"
+substr(x, start = 4, stop = 8)
+```
+
+É possível utilizar essas funções para alterar partes específicas do texto.
+
+```{r substr-replace}
+# substituindo caracteres da posição 4 à posição 8
+substr(x, start = 4, stop = 8) <- "TEXTO"
+x
+```
+
+A principal diferença entre `substr()` e `substring()` é que a segunda permite você passar vários valores iniciais e finais:
+
+```{r substring}
+# pega caracteres de (4 a 8) e de (10 a 11)
+substring(x, first = c(4, 10), last = c(8, 11))
+
+# pega caracteres de (1 ao último), (2 ao último) ...
+substring("abcdef", first = 1:6)
+```
+
+
+**** A SEGUIR ****
+
+- expressões regulares
+  - regmatches, regexpr, gregexpr, regexc
+- fuzzy matching
+- stringr
+
+
