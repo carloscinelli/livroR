@@ -291,8 +291,8 @@ texto</code></pre>
 <pre><code>## [1] &quot;Apartamento na Asa Sul&quot;</code></pre>
 <p>Por default, <code>paste()</code> separa os textos com um espaço em branco. Você pode alterar isso modificando o argumento <code>sep</code>. Caso não queira nenhum espaço entre as strings, basta definir <code>sep = &quot;&quot;</code> ou utilizar a função <code>paste0()</code>. Como usual, todas essas funções são vetorizadas.</p>
 <pre class="r"><code># separação padrão
-paste(&quot;x&quot;, 1:5, sep=&quot;&quot;)</code></pre>
-<pre><code>## [1] &quot;x1&quot; &quot;x2&quot; &quot;x3&quot; &quot;x4&quot; &quot;x5&quot;</code></pre>
+paste(&quot;x&quot;, 1:5)</code></pre>
+<pre><code>## [1] &quot;x 1&quot; &quot;x 2&quot; &quot;x 3&quot; &quot;x 4&quot; &quot;x 5&quot;</code></pre>
 <pre class="r"><code># separando por ponto
 paste(&quot;x&quot;, 1:5, sep=&quot;.&quot;)</code></pre>
 <pre><code>## [1] &quot;x.1&quot; &quot;x.2&quot; &quot;x.3&quot; &quot;x.4&quot; &quot;x.5&quot;</code></pre>

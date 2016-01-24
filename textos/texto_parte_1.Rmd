@@ -277,7 +277,7 @@ Por default, `paste()` separa os textos com um espaço em branco. Você pode alt
 
 ```{r paste-sep}
 # separação padrão
-paste("x", 1:5, sep="")
+paste("x", 1:5)
 
 # separando por ponto
 paste("x", 1:5, sep=".")
