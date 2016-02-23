@@ -394,7 +394,7 @@ arquivos <- c("simulacao_1.csv","simulacao_2.csv")
 
 # queremos eliminar a extensão .csv
 # note que o ponto precisa ser escapado
-nomes_sem_csv <- gsub("\\.csv", "", arquivo)
+nomes_sem_csv <- gsub("\\.csv", "", arquivos)
 nomes_sem_csv
 ```
 

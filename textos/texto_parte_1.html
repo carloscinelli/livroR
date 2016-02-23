@@ -390,9 +390,9 @@ arquivos &lt;- c(&quot;simulacao_1.csv&quot;,&quot;simulacao_2.csv&quot;)
 
 # queremos eliminar a extensão .csv
 # note que o ponto precisa ser escapado
-nomes_sem_csv &lt;- gsub(&quot;\\.csv&quot;, &quot;&quot;, arquivo)
+nomes_sem_csv &lt;- gsub(&quot;\\.csv&quot;, &quot;&quot;, arquivos)
 nomes_sem_csv</code></pre>
-<pre><code>## [1] &quot;5&quot;</code></pre>
+<pre><code>## [1] &quot;simulacao_1&quot; &quot;simulacao_2&quot;</code></pre>
 <div id="extraindo-partes-especificas-de-um-texto" class="section level4">
 <h4>Extraindo partes específicas de um texto</h4>
 <p>Às vezes você precisa extrair apenas algumas partes específicas de um texto, em determinadas posições. Para isso você pode usar as funções <code>substr()</code> e <code>substring()</code>.</p>
