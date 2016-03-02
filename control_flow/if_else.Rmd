@@ -1,0 +1,272 @@
+---
+title: "if_else"
+author: "Carlos Cinelli"
+date: "2 de março de 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, collapse = TRUE)
+options(scipen = 1)
+```
+
+# Execução condicional: `if()`, `if() else` e `ifelse()`.
+
+Há ocasiões em queremos ou precisamos executar parte do código **apenas se alguma condição for atendida**. O R fornece três opções básicas para estruturar seu código dessa maneira: `if()`, `if() else` e `ifelse()`. Vejamos cada uma delas.
+
+### O `if()` sozinho
+
+A estrutura básica do `if()` é a seguinte:
+
+```{r estrutura-if, eval = FALSE}
+if (condicao) {
+  
+  # comandos que
+  # serao rodados
+  # caso condicao = TRUE
+  
+}
+```
+
+- O início do código se dá com o comando `if` seguido de parênteses e chaves;
+- Dentro do parênteses temos uma condição lógica, que deverá ter como resultado ou `TRUE` ou `FALSE`;
+- Dentro das chaves temos o bloco de código que será executado se -- e somente se -- a codição do parênteses for `TRUE`.
+
+
+Vejamos um exemplo muito simples. Temos dois blocos de código que criam as variáveis `x` e `y`, mas eles só serão executados se as variáveis `cria_x` e `cria_y` forem `TRUE`, respectivamente.
+
+```{r if cria_x cria_y}
+# limpa a área de trabalho
+rm(list = ls())
+
+# vetores de condição lógica
+cria_x <- TRUE
+cria_y <- FALSE
+
+# só executa se cria_x = TRUE
+if (cria_x) {
+  x <- 1
+}
+
+# só executa se cria_y = TRUE
+if (cria_y) {
+  y <- 1
+}
+
+# note que x foi criado
+exists("x")
+
+# note que y não foi criado
+exists("y")
+```
+
+Note que somente a variável `x` foi criada. Vamos agora rodar o mesmo bloco mas com `TRUE` e `FALSE` diferentes.
+
+```{r if cria_x cria_y 2}
+# limpa a área de trabalho
+rm(list = ls())
+
+# vetores de condição lógica
+cria_x <- FALSE
+cria_y <- TRUE
+
+# só executa se cria_x = TRUE
+if (cria_x) {
+  x <- 1
+}
+
+# só executa se cria_y = TRUE
+if (cria_y) {
+  y <- 1
+}
+
+# note que x não foi criado
+exists("x")
+
+# note que y foi criado
+exists("y")
+```
+
+Note que agora apenas o `y` foi criado.
+
+### O `if()` com o `else`
+
+Outra forma de executar códigos de maneira condicional é extender o `if()` com o opcional `else`. 
+
+A estrutura básica do `if() else` é a seguinte: 
+
+```{r estrutura-if() else, eval = FALSE}
+if (condicao) {
+  
+  # comandos que
+  # serao rodados
+  # caso condicao = TRUE
+  
+} else {
+  
+  # comandos que
+  # serao rodados
+  # caso condicao = FALSE
+  
+}
+```
+
+- O início do código se dá com o comando `if` seguido de parênteses e chaves;
+- Dentro do parênteses temos uma condição lógica, que deverá ter como resultado ou `TRUE` ou `FALSE`;
+- Dentro das chaves do `if()` temos um bloco de código que será executado se -- e somente se -- a codição do parênteses for `TRUE`.
+- Logo em seguida temos o `else` seguido de chaves;
+- Dentro das chaves do `else` temos um bloco de código que será executado se -- e somente se -- a condição do parênteses for `FALSE`.
+
+Como no caso anterior, vejamos primeiramente um exemplo bastante simples.
+
+```{r if() else numero}
+numero <- 1
+
+if (numero == 1) {
+  cat("o numero é igual a 1")
+} else {
+  cat("o numero não é igual a 1")
+}
+```
+
+É possível encadear diversos `if() else` em sequência:
+
+```{r if() else encadeado}
+numero <- 10
+
+if (numero == 1) {
+  cat("o numero é igual a 1")
+} else if (numero == 2) {
+  cat("o numero é igual a 2")
+} else {
+  cat("o numero não é igual nem a 1 nem a 2")
+}
+```
+
+
+Para fins de ilustração, vamos criar uma função que nos diga se um número é par ou ímpar. Nela vamos utilizar tanto o `if()` sozinho quanto o `if() else`. 
+
+Vale relembrar que um número (inteiro) é par se for divisível por 2 e que podemos verificar isso se o resto da divisão (operador `%%` no R) deste número por 2 for igual a zero. 
+
+```{r if() else par impar}
+par_ou_impar <- function(x){
+  
+  # verifica se o número é um decimal comparando o tamanho da diferença de x e round(x)
+  # se for decimal retorna NA (pois par e ímpar não fazem sentido para decimais)
+  if (abs(x - round(x)) > 1e-7) {
+    return(NA)
+  }
+  
+  # se o número for divisível por 2 (resto da divisão zero) retorna "par"
+  # caso contrário, retorna "ímpar"
+  if (x %% 2 == 0) {
+    return("par")
+  } else {
+    return("impar")
+  }
+  
+}
+```
+
+Vamos testar nossa função:
+
+```{r if() else testa par impar}
+par_ou_impar(4)
+par_ou_impar(5)
+par_ou_impar(2.1)
+```
+
+Parece que está funcionando bem... só tem um pequeno problema. Se quisermos aplicar nossa função a um vetor de números, olhe o que ocorrerá:
+
+```{r if() else-nao-vec}
+x <- 1:5
+par_ou_impar(x)
+```
+
+Provavelmente não era isso o que esperávamos. O que está ocorrendo aqui?
+
+### A função `ifelse()`
+
+Os comandos `if()` e `if() else` **não são vetorizados**. Uma alternativa para casos como esses é utilizar a função `ifelse()`.
+
+A função `ifelse()` tem a seguinte estrutura básica:
+
+```{r estrutura-ifelse, eval = FALSE}
+ifelse(vetor_de_condicoes, valor_se_TRUE, valor_se_FALSE)
+```
+
+- o primeiro argumento é um vetor (ou uma expressão que retorna um vetor) com vários `TRUE` e `FALSE`;
+- o segundo argumento é o valor que será retornado quando o elemento do `vetor_de_condicoes` for `TRUE`;
+- o terceiro argumento é o valor que será retornado quando o elemento do `vetor_de_condicoes` for `FALSE`.
+
+Primeiramente, vejamos um caso trivial, para entender melhor como funciona o `ifelse()`:
+
+```{r}
+ifelse(c(TRUE, FALSE, FALSE, TRUE), 1, -1)
+```
+
+Note que passamos um vetor de condições com `TRUE`, `FALSE`, `FALSE` e `TRUE`. O valor para o caso `TRUE` é `1` e o valor para o caso `FALSE` é `-1`. Logo, o resultado é `1`, `-1`, `-1` e `1`.
+
+Façamos agora um exemplo um pouco mais elaborado. Vamos criar uma versão com `ifelse` da nossa função que nos diz se um número é par ou ímpar.
+
+```{r par-impar-ifelse}
+par_ou_impar_ifelse <- function(x){
+  
+  # se x for decimal, retorna NA, se não for, retorna ele mesmo (x)
+  x <- ifelse(abs(x - round(x)) > 1e-7, NA, x)
+  
+  # se x for divisivel por 2, retorna 'par', se não for, retorna impar
+  ifelse(x %% 2 == 0, "par", "impar")
+}
+
+```
+
+Testemos a função com vetores. Perceba que agora funciona sem problemas!
+
+```{r testa-par-impar}
+par_ou_impar_ifelse(x)
+par_ou_impar_ifelse(c(x, 1.1))
+```
+
+### Vetorização e `ifelse()`
+
+Um tema constante neste livro é fazer com que você comece a pensar em explorar a vetorização do R. Este caso não é diferente, note que poderíamos ter feito a função utilizando apenas comparações vetorizadas:
+
+```{r par-impar-vetorizado}
+par_ou_impar_vec <- function(x){
+  
+  # transforma decimais em NA
+  decimais <- abs(x - round(x)) > 1e-7
+  x[decimais] <- NA
+  
+  # Cria vetor para aramazenar resultados
+  res <- character(length(x))
+  
+  # verificar quem é divisível por dois
+  ind <- (x %% 2) == 0
+  
+  # quem for é par
+  res[ind] <- "par"
+  
+  # quem não for é ímpar
+  res[!ind] <- "impar"
+  
+  # retorna resultado
+  return(res)
+}
+```
+
+Na prática, o que a função `ifelse()` faz é mais ou menos isso o que fizemos acima -- comparações e substituições de forma vetorizada. Note que, neste caso, nossa implementação ficou inclusive um pouco mais rápida do que a solução anterior com `ifelse()`:
+
+```{r compara-par-impar}
+library(microbenchmark)
+microbenchmark(par_ou_impar_vec(1:1e3), par_ou_impar_ifelse(1:1e3))
+```
+
+
+
+
+
+
+
+
