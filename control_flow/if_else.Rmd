@@ -7,7 +7,7 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, collapse = TRUE)
-options(scipen = 1)
+options(width = 100, digits = 2, scipen = 2)
 ```
 
 # Execução condicional: `if()`, `if() else` e `ifelse()`.

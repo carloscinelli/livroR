@@ -210,10 +210,9 @@ par_ou_impar(2.1)
 <p>Parece que está funcionando bem… só tem um pequeno problema. Se quisermos aplicar nossa função a um vetor de números, olhe o que ocorrerá:</p>
 <pre class="r"><code>x &lt;- 1:5
 par_ou_impar(x)
-## Warning in if (abs(x - round(x)) &gt; 1e-07) {: a condição tem comprimento &gt; 1
-## e somente o primeiro elemento será usado
-## Warning in if (x%%2 == 0) {: a condição tem comprimento &gt; 1 e somente o
-## primeiro elemento será usado
+## Warning in if (abs(x - round(x)) &gt; 1e-07) {: a condição tem comprimento &gt; 1 e somente o primeiro
+## elemento será usado
+## Warning in if (x%%2 == 0) {: a condição tem comprimento &gt; 1 e somente o primeiro elemento será usado
 ## [1] &quot;impar&quot;</code></pre>
 <p>Provavelmente não era isso o que esperávamos. O que está ocorrendo aqui?</p>
 </div>
@@ -274,12 +273,9 @@ par_ou_impar_ifelse(c(x, 1.1))
 <pre class="r"><code>library(microbenchmark)
 microbenchmark(par_ou_impar_vec(1:1e3), par_ou_impar_ifelse(1:1e3))
 ## Unit: microseconds
-##                         expr     min      lq      mean  median       uq
-##     par_ou_impar_vec(1:1000)  54.898  56.443  91.21209  57.621  83.2805
-##  par_ou_impar_ifelse(1:1000) 321.159 324.955 419.79213 329.006 419.2465
-##       max neval cld
-##  1175.638   100  a 
-##  1428.843   100   b</code></pre>
+##                         expr min  lq mean median  uq  max neval cld
+##     par_ou_impar_vec(1:1000)  55  57   99     68  84 1413   100  a 
+##  par_ou_impar_ifelse(1:1000) 323 330  449    404 446 2086   100   b</code></pre>
 </div>
 </div>
 
