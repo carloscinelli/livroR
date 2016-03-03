@@ -86,10 +86,7 @@ img {
 <li>Dentro das chaves temos o bloco de código que será executado se – e somente se – a codição do parênteses for <code>TRUE</code>.</li>
 </ul>
 <p>Vejamos um exemplo muito simples. Temos dois blocos de código que criam as variáveis <code>x</code> e <code>y</code>, mas eles só serão executados se as variáveis <code>cria_x</code> e <code>cria_y</code> forem <code>TRUE</code>, respectivamente.</p>
-<pre class="r"><code># limpa a área de trabalho
-rm(list = ls())
-
-# vetores de condição lógica
+<pre class="r"><code># vetores de condição lógica
 cria_x &lt;- TRUE
 cria_y &lt;- FALSE
 
@@ -111,8 +108,8 @@ exists(&quot;x&quot;)
 exists(&quot;y&quot;)
 ## [1] FALSE</code></pre>
 <p>Note que somente a variável <code>x</code> foi criada. Vamos agora rodar o mesmo bloco mas com <code>TRUE</code> e <code>FALSE</code> diferentes.</p>
-<pre class="r"><code># limpa a área de trabalho
-rm(list = ls())
+<pre class="r"><code># remove x que foi criado
+rm(x)
 
 # vetores de condição lógica
 cria_x &lt;- FALSE
@@ -274,8 +271,8 @@ par_ou_impar_ifelse(c(x, 1.1))
 microbenchmark(par_ou_impar_vec(1:1e3), par_ou_impar_ifelse(1:1e3))
 ## Unit: microseconds
 ##                         expr min  lq mean median  uq  max neval cld
-##     par_ou_impar_vec(1:1000)  55  57   99     68  84 1413   100  a 
-##  par_ou_impar_ifelse(1:1000) 323 330  449    404 446 2086   100   b</code></pre>
+##     par_ou_impar_vec(1:1000)  58  61   99     74  90 1145   100  a 
+##  par_ou_impar_ifelse(1:1000) 342 351  456    427 465 1657   100   b</code></pre>
 </div>
 </div>
 

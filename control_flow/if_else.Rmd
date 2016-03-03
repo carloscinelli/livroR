@@ -10,8 +10,6 @@ knitr::opts_chunk$set(echo = TRUE, collapse = TRUE)
 options(width = 100, digits = 2, scipen = 2)
 ```
 
-# Execução condicional: `if()`, `if() else` e `ifelse()`.
-
 Há ocasiões em queremos ou precisamos executar parte do código **apenas se alguma condição for atendida**. O R fornece três opções básicas para estruturar seu código dessa maneira: `if()`, `if() else` e `ifelse()`. Vejamos cada uma delas.
 
 ### O `if()` sozinho
@@ -36,9 +34,6 @@ if (condicao) {
 Vejamos um exemplo muito simples. Temos dois blocos de código que criam as variáveis `x` e `y`, mas eles só serão executados se as variáveis `cria_x` e `cria_y` forem `TRUE`, respectivamente.
 
 ```{r if cria_x cria_y}
-# limpa a área de trabalho
-rm(list = ls())
-
 # vetores de condição lógica
 cria_x <- TRUE
 cria_y <- FALSE
@@ -63,8 +58,8 @@ exists("y")
 Note que somente a variável `x` foi criada. Vamos agora rodar o mesmo bloco mas com `TRUE` e `FALSE` diferentes.
 
 ```{r if cria_x cria_y 2}
-# limpa a área de trabalho
-rm(list = ls())
+# remove x que foi criado
+rm(x)
 
 # vetores de condição lógica
 cria_x <- FALSE
