@@ -129,7 +129,7 @@ $(document).ready(function () {
 <ul>
 <li>O início do código se dá com o comando <code>if</code> seguido de parênteses e chaves;</li>
 <li>Dentro do parênteses temos uma condição lógica, que deverá ter como resultado ou <code>TRUE</code> ou <code>FALSE</code>;</li>
-<li>Dentro das chaves temos o bloco de código que será executado se – e somente se – a codição do parênteses for <code>TRUE</code>.</li>
+<li>Dentro das chaves temos o bloco de código que será executado se – e somente se – a condição do parênteses for <code>TRUE</code>.</li>
 </ul>
 <p>Vejamos um exemplo muito simples. Temos dois blocos de código que criam as variáveis <code>x</code> e <code>y</code>, mas eles só serão executados se as variáveis <code>cria_x</code> e <code>cria_y</code> forem <code>TRUE</code>, respectivamente.</p>
 <pre class="r"><code># vetores de condição lógica
@@ -200,7 +200,7 @@ exists(&quot;y&quot;)
 <ul>
 <li>O início do código se dá com o comando <code>if</code> seguido de parênteses e chaves;</li>
 <li>Dentro do parênteses temos uma condição lógica, que deverá ter como resultado ou <code>TRUE</code> ou <code>FALSE</code>;</li>
-<li>Dentro das chaves do <code>if()</code> temos um bloco de código que será executado se – e somente se – a codição do parênteses for <code>TRUE</code>.</li>
+<li>Dentro das chaves do <code>if()</code> temos um bloco de código que será executado se – e somente se – a condição do parênteses for <code>TRUE</code>.</li>
 <li>Logo em seguida temos o <code>else</code> seguido de chaves;</li>
 <li>Dentro das chaves do <code>else</code> temos um bloco de código que será executado se – e somente se – a condição do parênteses for <code>FALSE</code>.</li>
 </ul>
@@ -317,8 +317,8 @@ par_ou_impar_ifelse(c(x, 1.1))
 microbenchmark(par_ou_impar_vec(1:1e3), par_ou_impar_ifelse(1:1e3))
 ## Unit: microseconds
 ##                         expr min  lq mean median  uq  max neval cld
-##     par_ou_impar_vec(1:1000)  55  56  107     58  78 1558   100  a 
-##  par_ou_impar_ifelse(1:1000) 321 325  416    353 441 1930   100   b</code></pre>
+##     par_ou_impar_vec(1:1000)  56  62  102     76 101 1590   100  a 
+##  par_ou_impar_ifelse(1:1000) 326 358  501    420 523 2113   100   b</code></pre>
 </div>
 
 

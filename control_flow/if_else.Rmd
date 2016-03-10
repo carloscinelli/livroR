@@ -28,7 +28,7 @@ if (condicao) {
 
 - O início do código se dá com o comando `if` seguido de parênteses e chaves;
 - Dentro do parênteses temos uma condição lógica, que deverá ter como resultado ou `TRUE` ou `FALSE`;
-- Dentro das chaves temos o bloco de código que será executado se -- e somente se -- a codição do parênteses for `TRUE`.
+- Dentro das chaves temos o bloco de código que será executado se -- e somente se -- a condição do parênteses for `TRUE`.
 
 
 Vejamos um exemplo muito simples. Temos dois blocos de código que criam as variáveis `x` e `y`, mas eles só serão executados se as variáveis `cria_x` e `cria_y` forem `TRUE`, respectivamente.
@@ -108,7 +108,7 @@ if (condicao) {
 
 - O início do código se dá com o comando `if` seguido de parênteses e chaves;
 - Dentro do parênteses temos uma condição lógica, que deverá ter como resultado ou `TRUE` ou `FALSE`;
-- Dentro das chaves do `if()` temos um bloco de código que será executado se -- e somente se -- a codição do parênteses for `TRUE`.
+- Dentro das chaves do `if()` temos um bloco de código que será executado se -- e somente se -- a condição do parênteses for `TRUE`.
 - Logo em seguida temos o `else` seguido de chaves;
 - Dentro das chaves do `else` temos um bloco de código que será executado se -- e somente se -- a condição do parênteses for `FALSE`.
 
