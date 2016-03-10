@@ -86,7 +86,7 @@ Note que agora apenas o `y` foi criado.
 
 ### O `if()` com o `else`
 
-Outra forma de executar códigos de maneira condicional é extender o `if()` com o opcional `else`. 
+Outra forma de executar códigos de maneira condicional é acrescentar ao `if()` o opcional `else`. 
 
 A estrutura básica do `if() else` é a seguinte: 
 
