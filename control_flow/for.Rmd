@@ -355,7 +355,7 @@ max_loop <- function(x){
   max <- x[1]
   
   for(i in 2:length(x)){
-    if(x[i] > x[i-1]){
+    if(x[i] > max){
       max <- x[i]
     }
     
